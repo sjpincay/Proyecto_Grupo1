@@ -10,12 +10,21 @@ import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 
 /**
  * Es una clase que implementa métodos estáticos de utilidades.
  * @author danie
  */
 public class Utilidades {
+    /**
+     * Es un método que permite obtener la información de un fichero
+     * @param nombrearchivo archivo que se desea leer
+     * @return una lista con las líneas del fichero
+     */
     public static ArrayList<String> LeeFichero(String nombrearchivo) {
         ArrayList<String> lineas = new ArrayList<>();
         File archivo = null;
@@ -56,8 +65,8 @@ public class Utilidades {
     }
     /**
      * Es un método que pregunta al usuario y retorna la respuesta en tipo String
-     * @param mensaje
-     * @return 
+     * @param mensaje es lo que se desea imprimir
+     * @return el dato ingresado por el usuario
      */
     public static String solicitarEntrada(String mensaje){
         Scanner sc = new Scanner(System.in);
@@ -65,5 +74,16 @@ public class Utilidades {
         String dato= sc.nextLine();
         return dato;
     }
+    /**
+     * Es un método que recibe un dato y lo agrega en el archivo .txt
+     * @param data información que se desea agregar
+     */
+    public static void escribirFichero(String data){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("archivo.txt", true))) {
+            writer.write(data);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
-
