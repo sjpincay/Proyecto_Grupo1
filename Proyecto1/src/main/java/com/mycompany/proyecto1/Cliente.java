@@ -17,7 +17,7 @@ public class Cliente extends Usuario{
 
     private String numeroTarjeta;
     private int puntosLicencia;
-    private ArrayList<Vehiculos> vehiculos;
+    private ArrayList<Vehiculo> vehiculos;
 
     /**
      * Constructor de la clase cliente
@@ -77,11 +77,26 @@ public class Cliente extends Usuario{
                  
                 for(Vehiculo vehiculo: vehiculos){
                     
-                    if(!vehiculo.getPlca().equal(placa)) continue;
+                    if(!vehiculo.getPlaca().equals(placa)) continue;
                     vehiculo.mostrarMultas();
                 }
             }
                 
+        }
+        
+    }
+    
+    
+    @Override
+    public void mostrarMenu(){
+        int opcion = Utilidades.solicitarEntrada("1. Consultar multas \n2. Agendar Revision tecnica\n");
+        
+        if(opcion == 1){
+            consultar_multas();
+        }else if(opcion == 2){
+            agendarRevision();
+        }else{
+            System.out.println("La opcion no es valida");
         }
         
     }
@@ -148,20 +163,14 @@ public class Cliente extends Usuario{
         this.puntosLicencia = puntosLicencia;
     }
 
-    public ArrayList<Multas> getMultas() {
-        return multas;
+  
+
+    public ArrayList<Vehiculo> getVehiulos() {
+        return vehiculos;
     }
 
-    public void setMultas(ArrayList<Multas> multas) {
-        this.multas = multas;
-    }
-
-    public ArrayList<Vehiculos> getVehiulos() {
-        return vehiulos;
-    }
-
-    public void setVehiulos(ArrayList<Vehiculos> vehiulos) {
-        this.vehiulos = vehiulos;
+    public void setVehiulos(ArrayList<Vehiculo> vehiculos) {
+        this.vehiculos = vehiculos;
     }
     
     

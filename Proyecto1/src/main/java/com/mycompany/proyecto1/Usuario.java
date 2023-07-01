@@ -43,8 +43,31 @@ public abstract class Usuario {
         this.perfil = perfil;
     }
 
+    /**
+     * Metodo encargado de mostrar el menu del usuario
+     */
+    public abstract void mostrarMenu();
+    
+    
+    /**
+     * Metodo encargado de msotrar las multas de los usuarios
+     */
     public abstract void consultar_multas();
     
+    
+    /**
+     * Metodo que permite validar credenciales para el registro
+     * 
+     * @param usuario usuario del cliente u operador
+     * @param password password del usuario
+     * @return true si las credenciales son iguales, false caso constrario
+     */
+    public boolean validarCredenciales(String usuario, String password){
+        if(usuario.equals(this.usuario) && password.equals(this.password)){
+            return true;
+        }
+        return false;
+    }
     
     /**
      * Obtiene el numero de cedula del usuario
