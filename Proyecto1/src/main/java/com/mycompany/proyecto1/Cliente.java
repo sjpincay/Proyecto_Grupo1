@@ -25,7 +25,7 @@ public class Cliente extends Usuario{
      * @param numeroTarjeta
      * @param puntosLicencia
      * @param multas
-     * @param vehiulos
+     * @param vehiculos
      * @param cedula
      * @param nombres
      * @param apellidos
@@ -92,13 +92,13 @@ public class Cliente extends Usuario{
      * y como son estaticas no es necesario un objeto
      */
     private ArrayList<Vehiculo> init_vehiculos(){
-        ArrayList<Vehiculos> vehiculos = Sistema.vehiculos; 
+        ArrayList<Vehiculo> vehiculos = Sistema.vehiculos; 
         ArrayList<Vehiculo> vehiculosReturn= new ArrayList<>(); 
         //se debe filtrar los vehiculos propios del usuario
         
         for(Vehiculo vehiculo: vehiculos){
             
-            if(vehiculo.getOwner().equal(cedula)){
+            if(vehiculo.getOwner().equals(cedula)){
                 //El cliente actual es dueno del vehiculo
                 vehiculosReturn.add(vehiculo);
             }
@@ -113,7 +113,7 @@ public class Cliente extends Usuario{
         String placa = Utilidades.solicitarEntrada("Ingrese su placa: ");
         Vehiculo vehiculoRevision  = null;
         for(Vehiculo vehiculo: vehiculos){
-            if(!vehiculo.getPlca().equal(placa)) continue;
+            if(!vehiculo.getPlaca().equals(placa)) continue;
             vehiculoRevision = vehiculo;
                 
         }
@@ -121,7 +121,7 @@ public class Cliente extends Usuario{
         if(!vehiculoRevision.getMultas().isEmpty()){
             //Entra si tiene multas
             System.out.println("Lo siento, usted tiene multas pendientes");
-            vehiculoRevision.mostrarMutlas();
+            vehiculoRevision.mostrarMultas();
             return;
         }
         
