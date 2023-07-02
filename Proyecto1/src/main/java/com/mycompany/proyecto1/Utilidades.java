@@ -25,7 +25,7 @@ public class Utilidades {
      * @param nombrearchivo archivo que se desea leer
      * @return una lista con las líneas del fichero
      */
-    public static ArrayList<String> LeeFichero(String nombrearchivo) {
+    public static ArrayList<String> LeerFichero(String nombrearchivo) {
         ArrayList<String> lineas = new ArrayList<>();
         File archivo = null;
         FileReader fr = null;
@@ -75,13 +75,77 @@ public class Utilidades {
         return dato;
     }
     /**
+     * Es un método que pregunta al usuario y retorna la respuesta en tipo int
+     * @param mensaje es lo que se desea imprimir
+     * @return el dato ingresado por el usuario
+     */
+    public static int solicitarEntradaInt(String mensaje){
+        Scanner sc = new Scanner(System.in);
+        System.out.print(mensaje);
+        int dato= sc.nextInt();
+        sc.nextLine();
+        return dato;
+    }
+    /**
      * Es un método que recibe un dato y lo agrega en el archivo .txt
      * @param data información que se desea agregar
      */
-    public static void escribirFichero(String data){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("archivo.txt", true))) {
+    public static void escribirFichero(String data, String archivo){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo, true))) {
             writer.write(data);
             writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 
+     * @param data 
+     */
+    public static void escribirFichero(String data, String nombreArchivo, int numeroLinea){
+        try {
+            // Leer el archivo existente
+            File archivo = new File(nombreArchivo);
+            FileReader fr = new FileReader(archivo);
+            BufferedReader br = new BufferedReader(fr);
+
+            // Crear un archivo temporal para escribir el contenido modificado
+            File archivoTemporal = new File("temp.txt");
+            FileWriter fw = new FileWriter(archivoTemporal);
+            BufferedWriter bw = new BufferedWriter(fw);
+
+            // Contador de líneas
+            int contadorLineas = 1;
+            String linea;
+
+            // Leer y escribir el contenido línea por línea
+            while ((linea = br.readLine()) != null) {
+                if (contadorLineas == numeroLinea) {
+                    bw.write(data);
+                    bw.newLine();
+                } else {
+                    // Mantener la línea original
+                    bw.write(linea);
+                    bw.newLine();
+                }
+
+                contadorLineas++;
+            }
+
+            // Cerrar los archivos
+            br.close();
+            bw.close();
+
+            // Eliminar el archivo original
+            if (archivo.delete()) {
+                // Renombrar el archivo temporal como el original
+                archivoTemporal.renameTo(new File(nombreArchivo));
+            } else {
+                System.out.println("No se pudo eliminar el archivo original.");
+            }
+
+            System.out.println("La línea se ha cambiado exitosamente.");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
