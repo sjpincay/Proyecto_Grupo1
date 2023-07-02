@@ -54,7 +54,7 @@ public class Cliente extends Usuario{
     public void consultar_multas() {
         int opcion = 0;
         do{
-            opcion = Utilidades.solicitarEntrada("Si desea ver sus mutlas con su
+            opcion = Utilidades.solicitarEntradaInt("Si desea ver sus mutlas con su
                 + "cedula ingrese (1) \n en caso de quere con su placa ingrese (2): ");
         }while(opcion > 2 || opcion < 1);
         
@@ -89,7 +89,7 @@ public class Cliente extends Usuario{
     
     @Override
     public void mostrarMenu(){
-        int opcion = Utilidades.solicitarEntrada("1. Consultar multas \n2. Agendar Revision tecnica\n");
+        int opcion = Utilidades.solicitarEntradaInt("1. Consultar multas \n2. Agendar Revision tecnica\n");
         
         if(opcion == 1){
             consultar_multas();
@@ -146,8 +146,30 @@ public class Cliente extends Usuario{
         //Mostrar los horarios FALTA
     }
     
-    private double valorPagar(){
-        return 0.0;
+    /**
+     * En cargado de obtener el precio que se debera pagara en la revision 
+     * @return el precio a pagar
+     */
+    private double valorPagar(String placa){
+        double base = 150.0;
+        
+        if(perfil == TipoPerfil.ESTRELLA){
+            return base - base*0.2;
+        }
+        
+        //En esta parte accede los tipo cliente
+        
+        int puntosPerdido = 0;
+        
+        //Obtener la cantidad de puntos
+        for (Vehiculo vehiculo : vehiculos) {
+            
+            if(vehiculo.getPlaca().equals(placa)){
+                puntosPerdido = vehiculo.totalPuntosPerdidos();
+            }
+        }
+        
+        return base + (puntosPerdido*10);
     }
 
     public String getNumeroTarjeta() {
