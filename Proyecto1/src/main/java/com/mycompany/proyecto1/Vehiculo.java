@@ -67,6 +67,15 @@ public class Vehiculo {
             System.out.println("Para pagar puede acercarse a la agencia mas cercana");
         }
     }
+    
+    public int totalPuntosPerdidos(){
+        int puntosTotales = 0;
+        for (Multa multa : multas) {
+            puntosTotales += multa.getPuntos();
+        }
+        
+        return puntosTotales;
+    }
 
     public String getOwner() {
         return owner;
