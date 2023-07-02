@@ -54,7 +54,7 @@ public class Cliente extends Usuario{
     public void consultar_multas() {
         int opcion = 0;
         do{
-            opcion = Utilidades.solicitarEntrada("Si desea ver sus mutlas con su "
+            opcion = Utilidades.solicitarEntrada("Si desea ver sus mutlas con su
                 + "cedula ingrese (1) \n en caso de quere con su placa ingrese (2): ");
         }while(opcion > 2 || opcion < 1);
         
@@ -132,8 +132,11 @@ public class Cliente extends Usuario{
             vehiculoRevision = vehiculo;
                 
         }
-        
-        if(!vehiculoRevision.getMultas().isEmpty()){
+        if(vehiculoRevision == null){
+            System.out.println("No se encontro su vehiculo en la base de datos");
+            return;
+        }
+        if(!(vehiculoRevision.getMultas().isEmpty())){
             //Entra si tiene multas
             System.out.println("Lo siento, usted tiene multas pendientes");
             vehiculoRevision.mostrarMultas();
