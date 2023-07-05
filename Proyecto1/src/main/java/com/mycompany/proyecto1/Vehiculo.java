@@ -6,17 +6,6 @@ package com.mycompany.proyecto1;
 
 import java.util.ArrayList;
 
-/**
- *
- * 
- * 
- * @author wal26
- */
-public class Vehiculo {
-   package com.mycompany.proyecto1;
-
-import java.util.ArrayList;
-
 public class Vehiculo {
     private String owner;
     private String placa;
@@ -150,5 +139,6 @@ public class Vehiculo {
         this.multas = multas;
     }
 }
+
  
     
