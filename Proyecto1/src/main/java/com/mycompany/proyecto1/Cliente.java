@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyecto1;
 
+import Enums.TipoPerfil;
 import java.util.ArrayList;
 
 /**
@@ -28,22 +29,22 @@ public class Cliente extends Usuario{
      * @param vehiculos
      * @param cedula
      * @param nombres
-     * @param apellidos
+   
      * @param edad
      * @param correo
      * @param usuario
      * @param password
      * @param perfil 
      */
-    public Cliente(String numeroTarjeta, int puntosLicencia, String cedula, String nombres, String apellidos, 
+    public Cliente( String cedula, String nombres, 
             int edad, String correo, String usuario, String password, TipoPerfil perfil) {
         
         //Debido a que las multas se cargaran por el sistema y son estaticas
         //No se las pedira al crear usuario, existira una funcion que la inicilize
         
-        super(cedula, nombres, apellidos, edad, correo, usuario, password, perfil);
-        this.numeroTarjeta = numeroTarjeta;
-        this.puntosLicencia = puntosLicencia;
+        super(cedula, nombres, edad, correo, usuario, password, perfil);
+//        this.numeroTarjeta = numeroTarjeta;
+//        this.puntosLicencia = puntosLicencia;
         
         vehiculos = init_vehiculos();
         
@@ -54,8 +55,7 @@ public class Cliente extends Usuario{
     public void consultar_multas() {
         int opcion = 0;
         do{
-            opcion = Utilidades.solicitarEntradaInt("Si desea ver sus mutlas con su
-                + "cedula ingrese (1) \n en caso de quere con su placa ingrese (2): ");
+            opcion = Utilidades.solicitarEntradaInt("Si desea ver sus mutlas con su"+ "cedula ingrese (1) \n en caso de quere con su placa ingrese (2): ");
         }while(opcion > 2 || opcion < 1);
         
         

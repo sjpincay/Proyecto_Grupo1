@@ -4,6 +4,8 @@
  */
 package com.mycompany.proyecto1;
 
+import Enums.TipoPerfil;
+
 /**
  * Es una clase abstracta la cual servira como apoyo para clase Cliente y Operador
  * @author wal26
@@ -12,19 +14,18 @@ public abstract class Usuario {
     
     protected String cedula;
     protected String nombres;
-    protected String apellidos;
     protected int edad;
     protected String correo;
     protected String usuario;
     protected String password;
-    protected TipoPerfil perfil;
+    protected TipoPerfil TipoPerfil;
+  
     
     /**
      * Constructor de la clase Usuario
      * 
      * @param cedula La cedula del usuario
      * @param nombres El nombre del usuario 
-     * @param apellidos El Apellido del usuario
      * @param edad La edad del usuario
      * @param correo El correo del Usuario
      * @param usuario El nombre de usuario
@@ -32,15 +33,14 @@ public abstract class Usuario {
      * @param perfil El tipo de perfil
      */
 
-    public Usuario(String cedula, String nombres, String apellidos, int edad, String correo, String usuario, String password, TipoPerfil perfil) {
+    public Usuario(String cedula, String nombres, int edad, String correo, String usuario, String password, TipoPerfil TipoPerfil) {
         this.cedula = cedula;
         this.nombres = nombres;
-        this.apellidos = apellidos;
         this.edad = edad;
         this.correo = correo;
         this.usuario = usuario;
         this.password = password;
-        this.perfil = perfil;
+        this.TipoPerfil = TipoPerfil;
     }
 
     /**
@@ -102,22 +102,7 @@ public abstract class Usuario {
         this.nombres = nombres;
     }
 
-    /**
-     * Permite obtener el apellido del usuario
-     * @return Apellido del usuario
-     */
-    public String getApellidos() {
-        return apellidos;
-    }
-
     
-    /**
-     * Modifica el atributo del apellido del usuario
-     * @param apellidos El apellido del usuario
-     */
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
 
     
     /**

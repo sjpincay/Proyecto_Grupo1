@@ -8,8 +8,10 @@ package com.mycompany.proyecto1;
  *
  * @author sjpin
  */
+import Enums.TipoPerfil;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import static ManejoArchivos.ManejoArchivos.LeerValidando;
 public class Sistema {
     private ArrayList<Multa> multas;
     private ArrayList<Vehiculo> vehiculos;
@@ -18,74 +20,97 @@ public class Sistema {
         usuarios= cargarUsuarios(); // inicializamos la lista de usuarios cargando los datos desde el archivo
     }
     private ArrayList<Usuario> cargarUsuarios() {
-    ArrayList<String> usuarios = Utilidades.LeerFichero("usuarios.txt");
-    ArrayList<Usuario> usuarioReturn = new ArrayList<>();
-
-    for (String linea : usuarios) {
-        String[] datos = linea.split(",");
-        Usuario usuario;
-
-        if (datos[6].equals("S")) {
-            ArrayList<String> clientes = Utilidades.LeerFichero("clientes.txt");
-
-            for (String linea1 : clientes) {
-                String[] datos1 = linea1.split(",");
-                if (datos[0].equals(datos1[0])) {
-                    String nombre = datos[1].split(" ")[0];
-                    String apellido = datos[1].split(" ")[1];
-
-                    Cliente cliente = new Cliente(
-                            datos1[1],
-                            Integer.parseInt(datos1[2]),
-                            datos1[0],
-                            nombre,
-                            apellido,
-                            Integer.parseInt(datos[2]),
-                            datos[3],
-                            datos[4],
-                            datos[5],
-                            TipoPerfil.ESTANDAR
-                    );
-
-                    usuario = cliente;
+        
+        ArrayList<String[]> usuario= LeerValidando("usuarios.txt",true);
+        Usuario u;
+        
+        for(String[] dato:usuario){
+            switch(dato[6]){
+                case "S":
+                    u=new Cliente(dato[0],dato[1],Integer.valueOf(dato[2]),dato[3],dato[4],dato[5],TipoPerfil.valueOf(dato[6]));
+                    usuarios.add(u);
                     break;
-                }
+                case "E":
+                    u=new ClienteVip(dato[0],dato[1],Integer.valueOf(dato[2]),dato[3],dato[4],dato[5],TipoPerfil.valueOf(dato[6]));
+                    usuarios.add(u);
+                    break; 
+                case "O":
+                    u=new Operador(dato[0],dato[1],Integer.valueOf(dato[2]),dato[3],dato[4],dato[5],TipoPerfil.valueOf(dato[6]));
+                    usuarios.add(u);
+                    break;    
             }
-        } else if (datos[6].equals("E")) {
-            ArrayList<String> clientes = Utilidades.LeerFichero("clientes.txt");
-
-            for (String linea1 : clientes) {
-                String[] datos1 = linea1.split(",");
-                if (datos[0].equals(datos1[0])) {
-                    String nombre = datos[1].split(" ")[0];
-                    String apellido = datos[1].split(" ")[1];
-
-                    Cliente cliente = new Cliente(
-                            datos1[1],
-                            Integer.parseInt(datos1[2]),
-                            datos1[0],
-                            nombre,
-                            apellido,
-                            Integer.parseInt(datos[2]),
-                            datos[3],
-                            datos[4],
-                            datos[5],
-                            TipoPerfil.ESTRELLA
-                    );
-
-                    usuario = cliente;
-                    break;
-                }
-            }
-        } else {
-            // Aquí puedes agregar otro tipo de usuario si es necesario
-            usuario = new Usuario(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5]);
         }
-
-        usuarioReturn.add(usuario);
-    }
-
-    return usuarioReturn;
+//    ArrayList<String> usuarios = Utilidades.LeerFichero("usuarios.txt");
+//    ArrayList<Usuario> usuarioReturn = new ArrayList<>();
+//
+//    for (String linea : usuarios) {
+//        String[] datos = linea.split(",");
+//        Usuario usuario;
+        
+        
+        
+        
+//        if (datos[6].equals("S")) {
+//            ArrayList<String> clientes = Utilidades.LeerFichero("clientes.txt");
+//
+//            for (String linea1 : clientes) {
+//                String[] datos1 = linea1.split(",");
+//                if (datos[0].equals(datos1[0])) {
+//                    String nombre = datos[1].split(" ")[0];
+//                    String apellido = datos[1].split(" ")[1];
+//
+//                    Cliente cliente = new Cliente(
+//                            datos1[1],
+//                            Integer.parseInt(datos1[2]),
+//                            datos1[0],
+//                            nombre,
+//                            apellido,
+//                            Integer.parseInt(datos[2]),
+//                            datos[3],
+//                            datos[4],
+//                            datos[5],
+//                            TipoPerfil.ESTANDAR
+//                    );
+//
+//                    usuario = cliente;
+//                    break;
+//                }
+//            }
+//        } else if (datos[6].equals("E")) {
+//            ArrayList<String> clientes = Utilidades.LeerFichero("clientes.txt");
+//
+//            for (String linea1 : clientes) {
+//                String[] datos1 = linea1.split(",");
+//                if (datos[0].equals(datos1[0])) {
+//                    String nombre = datos[1].split(" ")[0];
+//                    String apellido = datos[1].split(" ")[1];
+//
+//                    Cliente cliente = new Cliente(
+//                            datos1[1],
+//                            Integer.parseInt(datos1[2]),
+//                            datos1[0],
+//                            nombre,
+//                            apellido,
+//                            Integer.parseInt(datos[2]),
+//                            datos[3],
+//                            datos[4],
+//                            datos[5],
+//                            TipoPerfil.ESTRELLA
+//                    );
+//
+//                    usuario = cliente;
+//                    break;
+//                }
+//            }
+//        } else {
+//            // Aquí puedes agregar otro tipo de usuario si es necesario
+//            usuario = new Usuario(datos[0], datos[1], datos[2], datos[3], datos[4], datos[5],datos[6] ) {};
+//        }
+//
+//        usuarioReturn.add(usuario);
+//    }
+//
+//    return usuarioReturn;
 }
 
     private void cargarVehiculos(){
