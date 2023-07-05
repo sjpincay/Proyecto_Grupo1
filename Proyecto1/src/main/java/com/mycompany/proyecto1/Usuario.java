@@ -177,15 +177,15 @@ public abstract class Usuario {
      * @return 
      */
     public TipoPerfil getPerfil() {
-        return perfil;
+        return TipoPerfil;
     }
 
     /**
      * Modifica el perfil del usuario 
      * @param perfil perfil del usuario
      */
-    public void setPerfil(TipoPerfil perfil) {
-        this.perfil = perfil;
+    public void setPerfil(TipoPerfil TipoPerfil) {
+        this.TipoPerfil = TipoPerfil;
     }
     
     

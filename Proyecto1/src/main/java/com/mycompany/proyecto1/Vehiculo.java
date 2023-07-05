@@ -30,11 +30,11 @@ public class Vehiculo {
     }
 
     private ArrayList<Multa> initMultas() {
-        ArrayList<Multa> multas = Sistema.getMultas();
+        ArrayList<Multa> mult = Sistema.multas;
         ArrayList<Multa> multaReturn = new ArrayList<>();
 
         // Filtrar las multas por placa
-        for (Multa multa : multas) {
+        for (Multa multa : mult) {
             if (multa.getPlaca().equals(placa)) {
                 multaReturn.add(multa);
             }
@@ -59,7 +59,9 @@ public class Vehiculo {
         }
 
         if (valorTotal > 0) {
-            System.out.println("Para pagar puede acercarse a la agencia más cercana.");
+            
+            System.out.println("\n\nTOTAL A PAGAR: " + valorTotal);
+            System.out.println("\nPara pagar puede acercarse a la agencia más cercana.");
         }
     }
 

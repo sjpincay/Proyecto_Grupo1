@@ -55,13 +55,15 @@ public class Cliente extends Usuario{
     public void consultar_multas() {
         int opcion = 0;
         do{
+            
             opcion = Utilidades.solicitarEntradaInt("Si desea ver sus mutlas con su"+ "cedula ingrese (1) \n en caso de quere con su placa ingrese (2): ");
-        }while(opcion > 2 || opcion < 1);
         
+        }while(opcion > 2 || opcion < 1);
         
         switch(opcion){
             case 1 -> {
                 String cedula  = Utilidades.solicitarEntrada("Ingrese su cedula: ");
+                
                 if(!cedula.equals(this.cedula)){
                     System.out.println("Sus datos no coinciden, intentelo nuevamente");
                     return;
@@ -70,6 +72,7 @@ public class Cliente extends Usuario{
                     //Si es cedula es en caso general
                     vehiculo.mostrarMultas();
                 }
+                break;
             }
                 
             case 2 -> {
@@ -84,19 +87,28 @@ public class Cliente extends Usuario{
                 
         }
         
+        mostrarMenu();
+        
     }
     
     
     @Override
     public void mostrarMenu(){
-        int opcion = Utilidades.solicitarEntradaInt("1. Consultar multas \n2. Agendar Revision tecnica\n");
+        int opcion = Utilidades.solicitarEntradaInt("\n1. Consultar multas \n2. Agendar Revision tecnica\n3. Salir\n");
         
-        if(opcion == 1){
-            consultar_multas();
-        }else if(opcion == 2){
-            agendarRevision();
-        }else{
-            System.out.println("La opcion no es valida");
+        switch (opcion) {
+            case 1:
+                consultar_multas();
+                break;
+            case 2:
+                agendarRevision();
+                break;
+            case 3:
+                System.exit(0);
+            default:
+                System.out.println("La opcion es incorrecta");
+                mostrarMenu();
+                break;
         }
         
     }
@@ -107,11 +119,12 @@ public class Cliente extends Usuario{
      * y como son estaticas no es necesario un objeto
      */
     private ArrayList<Vehiculo> init_vehiculos(){
-        ArrayList<Vehiculo> vehiculos = Sistema.vehiculos; 
+        ArrayList<Vehiculo> vehi = Sistema.vehiculos; 
         ArrayList<Vehiculo> vehiculosReturn= new ArrayList<>(); 
         //se debe filtrar los vehiculos propios del usuario
         
-        for(Vehiculo vehiculo: vehiculos){
+        
+        for(Vehiculo vehiculo: vehi){
             
             if(vehiculo.getOwner().equals(cedula)){
                 //El cliente actual es dueno del vehiculo
@@ -119,6 +132,7 @@ public class Cliente extends Usuario{
             }
         }
         
+     
         return vehiculosReturn;
     }
     
@@ -153,7 +167,7 @@ public class Cliente extends Usuario{
     private double valorPagar(String placa){
         double base = 150.0;
         
-        if(perfil == TipoPerfil.ESTRELLA){
+        if(TipoPerfil == TipoPerfil.E){
             return base - base*0.2;
         }
         

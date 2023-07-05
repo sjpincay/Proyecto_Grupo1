@@ -9,19 +9,29 @@ package com.mycompany.proyecto1;
  * @author sjpin
  */
 import Enums.TipoPerfil;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import static ManejoArchivos.ManejoArchivos.LeerValidando;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class Sistema {
-    private ArrayList<Multa> multas;
-    private ArrayList<Vehiculo> vehiculos;
-    private ArrayList<Usuario> usuarios; // Lista de usuarios del sistema
+    public static ArrayList<Multa> multas = new ArrayList<>();
+    public static ArrayList<Vehiculo> vehiculos = new ArrayList<>();
+    public static ArrayList<Usuario> usuarios = new ArrayList<>(); // Lista de usuarios del sistema
     public Sistema(){
-        usuarios= cargarUsuarios(); // inicializamos la lista de usuarios cargando los datos desde el archivo
-    }
-    private ArrayList<Usuario> cargarUsuarios() {
+        cargarMultas();
+        cargarVehiculos();
+        cargarUsuarios(); // inicializamos la lista de usuarios cargando los datos desde el archivo
         
-        ArrayList<String[]> usuario= LeerValidando("usuarios.txt",true);
+        
+        
+    }
+    private void cargarUsuarios() {
+        
+        ArrayList<String[]> usuario= LeerValidando("C:\\Users\\wal26\\OneDrive\\Documentos\\Universidad\\poo\\proyecto\\Proyecto_Grupo1\\Proyecto1\\src\\main\\java\\com\\mycompany\\proyecto1\\usuarios.txt",true);
         Usuario u;
         
         for(String[] dato:usuario){
@@ -31,13 +41,17 @@ public class Sistema {
                     usuarios.add(u);
                     break;
                 case "E":
-                    u=new ClienteVip(dato[0],dato[1],Integer.valueOf(dato[2]),dato[3],dato[4],dato[5],TipoPerfil.valueOf(dato[6]));
+                    
+                    u=new Cliente(dato[0],dato[1],Integer.valueOf(dato[2]),dato[3],dato[4],dato[5],TipoPerfil.valueOf(dato[6]));
                     usuarios.add(u);
                     break; 
+                    
                 case "O":
+                    /*
                     u=new Operador(dato[0],dato[1],Integer.valueOf(dato[2]),dato[3],dato[4],dato[5],TipoPerfil.valueOf(dato[6]));
                     usuarios.add(u);
                     break;    
+*/
             }
         }
 //    ArrayList<String> usuarios = Utilidades.LeerFichero("usuarios.txt");
@@ -111,13 +125,39 @@ public class Sistema {
 //    }
 //
 //    return usuarioReturn;
-}
+    }
+    
 
     private void cargarVehiculos(){
+        ArrayList<String[]> vehiculo= LeerValidando("C:\\Users\\wal26\\OneDrive\\Documentos\\Universidad\\poo\\proyecto\\Proyecto_Grupo1\\Proyecto1\\src\\main\\java\\com\\mycompany\\proyecto1\\vehiculos.txt",true);
+        Vehiculo u;
         
+        for(String[] dato:vehiculo){
+            u = new Vehiculo(dato[0], dato[1], dato[2], dato[3], dato[4], dato[5], dato[6]);
+            vehiculos.add(u);
+
+        }
     }
     private void cargarMultas(){
-        
+        ArrayList<String[]> multa= LeerValidando("C:\\Users\\wal26\\OneDrive\\Documentos\\Universidad\\poo\\proyecto\\Proyecto_Grupo1\\Proyecto1\\src\\main\\java\\com\\mycompany\\proyecto1\\multas.txt",true);
+        Multa u;
+        DateFormat format = new SimpleDateFormat("dd-mm-YYYY");
+        Date fecha1 = null;
+        Date fecha2 = null;
+        for(String[] dato:multa){
+            
+            try {
+                fecha1 = format.parse(dato[4]);
+                fecha2 = format.parse(dato[5]);
+            } catch (ParseException ex) {
+                Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ;
+            
+            u = new Multa(dato[0], dato[1], dato[2], Double.parseDouble(dato[3]),fecha1, fecha2, Integer.parseInt(dato[6]));
+            multas.add(u);
+
+        }
     }
     public void iniciar(){
         System.out.println("+++++++++++++++++++++++++++++++++++++++++++");
@@ -132,14 +172,19 @@ public class Sistema {
             
             //validamos el usuario y contraseña ingresados
             for (Usuario usuarioRegistrado: usuarios){
+                
                 if (usuarioRegistrado.validarCredenciales(usuario, contraseña)){
                     loginExitoso=true;
                     usuarioActual=usuarioRegistrado;
                     break; 
                 }
             }
-            usuarioActual.mostrarMenu();
+        }
+        
+        
+        
+        usuarioActual.mostrarMenu();
             //todavia falta hacer correciones y agregar mas codigo att sjpincay
-    }
+    
 }
 }
