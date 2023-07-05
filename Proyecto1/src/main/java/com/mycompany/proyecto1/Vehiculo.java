@@ -13,7 +13,11 @@ import java.util.ArrayList;
  * @author wal26
  */
 public class Vehiculo {
-    
+   package com.mycompany.proyecto1;
+
+import java.util.ArrayList;
+
+public class Vehiculo {
     private String owner;
     private String placa;
     private String marca;
@@ -21,7 +25,7 @@ public class Vehiculo {
     private String year;
     private String chasis;
     private String color;
-    
+
     private ArrayList<Multa> multas;
 
     public Vehiculo(String owner, String placa, String marca, String modelo, String year, String chasis, String color) {
@@ -32,50 +36,55 @@ public class Vehiculo {
         this.year = year;
         this.chasis = chasis;
         this.color = color;
-        
-        multas = init_multas();
+
+        multas = initMultas();
     }
-    
-    
-    private ArrayList<Multa> init_multas(){
-        ArrayList<Multa> multas = Sistema.multas;
+
+    private ArrayList<Multa> initMultas() {
+        ArrayList<Multa> multas = Sistema.getMultas();
         ArrayList<Multa> multaReturn = new ArrayList<>();
-        
-        //Filtrar las multas
+
+        // Filtrar las multas por placa
         for (Multa multa : multas) {
-            if(multa.getPlaca().equals(placa)){
+            if (multa.getPlaca().equals(placa)) {
                 multaReturn.add(multa);
             }
         }
         return multaReturn;
     }
-    
-    public void mostrarMultas(){
-        double valor = 0.0;
-        
+
+    public void mostrarMultas() {
+        double valorTotal = 0.0;
+
         System.out.println("------------------------------------------------");
         System.out.println("               DETALLE DE MULTAS                ");
         System.out.println("------------------------------------------------");
-        System.out.println("CEDULA | MATRICULA | INFRACCION | VALOR A PAGAR |"
-                + " FECHA DE INFRACCION | FECHA DE NOTIFICACION | PUNTOS");
-        for (Multa multa : this.multas) {
-            System.out.println(multas);
-            valor += multa.getValor();
+        System.out.println("CEDULA | MATRICULA | INFRACCION | VALOR A PAGAR | FECHA DE INFRACCION | FECHA DE NOTIFICACION | PUNTOS");
+
+        for (Multa multa : multas) {
+            System.out.println(multa.getCedula() + " | " + multa.getPlaca() + " | " + multa.getInfraccion() + " | " +
+                    multa.getValor() + " | " + multa.getFechaInfraccion() + " | " + multa.getFechaNotificacion() + " | " +
+                    multa.getPuntos());
+
+            valorTotal += multa.getValor();
         }
-        
-        if(valor > 0){
-            System.out.println("Para pagar puede acercarse a la agencia mas cercana");
+
+        if (valorTotal > 0) {
+            System.out.println("Para pagar puede acercarse a la agencia más cercana.");
         }
     }
-    
-    public int totalPuntosPerdidos(){
+
+    public int totalPuntosPerdidos() {
         int puntosTotales = 0;
+
         for (Multa multa : multas) {
             puntosTotales += multa.getPuntos();
         }
-        
+
         return puntosTotales;
     }
+
+    // Getters y setters
 
     public String getOwner() {
         return owner;
@@ -140,7 +149,6 @@ public class Vehiculo {
     public void setMultas(ArrayList<Multa> multas) {
         this.multas = multas;
     }
-    
-    
-    
 }
+ 
+    
