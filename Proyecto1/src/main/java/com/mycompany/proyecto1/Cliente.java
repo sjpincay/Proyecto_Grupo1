@@ -5,6 +5,7 @@
 package com.mycompany.proyecto1;
 
 import Enums.TipoPerfil;
+import static ManejoArchivos.ManejoArchivos.LeerValidando;
 import java.util.ArrayList;
 
 /**
@@ -36,16 +37,15 @@ public class Cliente extends Usuario{
      * @param password
      * @param perfil 
      */
-    public Cliente( String cedula, String nombres, 
-            int edad, String correo, String usuario, String password, TipoPerfil perfil) {
-        
-        //Debido a que las multas se cargaran por el sistema y son estaticas
-        //No se las pedira al crear usuario, existira una funcion que la inicilize
-        
+    public Cliente( String cedula, String nombres, int edad, String correo, String usuario, String password, TipoPerfil perfil) {
         super(cedula, nombres, edad, correo, usuario, password, perfil);
-//        this.numeroTarjeta = numeroTarjeta;
-//        this.puntosLicencia = puntosLicencia;
-        
+        ArrayList<String[]> datosClientes = LeerValidando("operadores.txt", true);
+        for (String[] dato : datosClientes) {
+            if (dato[0].equals(cedula)) {
+                this.numeroTarjeta = String.valueOf(dato[1]);
+                this.puntosLicencia=Integer.valueOf(dato[2]);
+            }
+        }
         vehiculos = init_vehiculos();
         
         
@@ -214,6 +214,12 @@ public class Cliente extends Usuario{
     
     
   
+    public void comprarTickets(){
+        
+    }
     
+    public void consultarReservas(){
+        
+    }
     
 }
