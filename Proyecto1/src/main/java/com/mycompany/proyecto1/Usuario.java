@@ -148,6 +148,10 @@ public abstract class Usuario {
      * Metodo abstracto que se sobreescribe en Cliente y Operador
      */
     public abstract void consultarMultas();
+
+    Object getPassword() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     
     

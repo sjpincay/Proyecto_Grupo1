@@ -19,17 +19,18 @@ public class Cliente extends Usuario{
     ArrayList<String[]> datosClientes = LeerValidando("clientes.txt", true);
     Scanner sc = new Scanner(System.in);
     
-    public Cliente(String cedula, String nombres, int edad, String correo, String usuario, String contrasena, TipoPerfil tipoPerfil) {
-        super(cedula, nombres, edad, correo, usuario, contrasena, tipoPerfil);
+    public Cliente(String cedula, String nombres, int edad, String correo, String usuario, String Password, TipoPerfil tipoPerfil) {
+        super(cedula, nombres, edad, correo, usuario, Password, tipoPerfil);
 
         for (String[] dato : datosClientes) {
             if (dato[0].equals(cedula)) {
                 this.numTarjetaCredito = dato[1];
-                this.puntosLicencia=Integer.valueOf(dato[2]);
+                this.puntosLicencia=Integer.parseInt(dato[2]);
             }
         }
     }
     
+    @Override
     public void consultarMultas() {
         int opcion=0;
         Scanner sc = new Scanner(System.in);
@@ -87,7 +88,6 @@ public class Cliente extends Usuario{
             //Entra si tiene multas
             System.out.println("Lo siento, usted tiene multas pendientes");
             vehiculoRevision.mostrarMultas();
-            return;
         }
     }
     
@@ -131,12 +131,10 @@ public class Cliente extends Usuario{
         this.puntosLicencia = puntosLicencia;
     }   
 
-    @Override
     public void mostrarMenu() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
     public void consultar_multas() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
