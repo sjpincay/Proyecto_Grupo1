@@ -91,7 +91,5 @@ public class Multa {
                 + fechaInfraccion + " | " + fechaNotificacion + " | " + puntos;
     }
     
-    
-    
-    
+       
 }

@@ -3,9 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.proyecto1;
-
 import java.util.ArrayList;
-
+/**
+ *
+ * @author sjpin
+ */
 public class Vehiculo {
     private String owner;
     private String placa;
@@ -14,9 +16,7 @@ public class Vehiculo {
     private String year;
     private String chasis;
     private String color;
-
-    private ArrayList<Multa> multas;
-
+    private ArrayList<Multa> multas;  
     public Vehiculo(String owner, String placa, String marca, String modelo, String year, String chasis, String color) {
         this.owner = owner;
         this.placa = placa;
@@ -28,11 +28,12 @@ public class Vehiculo {
 
         multas = initMultas();
     }
-
-    private ArrayList<Multa> initMultas() {
-        ArrayList<Multa> mult = Sistema.multas;
+    
+    
+    public ArrayList<Multa> initMultas(){
+        ArrayList<Multa> mult = Sistema.listaMultlas;
         ArrayList<Multa> multaReturn = new ArrayList<>();
-
+        
         // Filtrar las multas por placa
         for (Multa multa : mult) {
             if (multa.getPlaca().equals(placa)) {
@@ -41,7 +42,9 @@ public class Vehiculo {
         }
         return multaReturn;
     }
-
+    
+    
+    
     public void mostrarMultas() {
         double valorTotal = 0.0;
 
@@ -64,7 +67,9 @@ public class Vehiculo {
             System.out.println("\nPara pagar puede acercarse a la agencia más cercana.");
         }
     }
-
+    
+    
+    
     public int totalPuntosPerdidos() {
         int puntosTotales = 0;
 
@@ -74,9 +79,8 @@ public class Vehiculo {
 
         return puntosTotales;
     }
-
-    // Getters y setters
-
+    
+    
     public String getOwner() {
         return owner;
     }
@@ -140,7 +144,6 @@ public class Vehiculo {
     public void setMultas(ArrayList<Multa> multas) {
         this.multas = multas;
     }
+    
 }
 
- 
-    

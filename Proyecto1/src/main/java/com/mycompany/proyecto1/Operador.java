@@ -4,8 +4,8 @@
  */
 package com.mycompany.proyecto1;
 
-import Enums.TipoPerfil;
 import static ManejoArchivos.ManejoArchivos.LeerValidando;
+import Enums.TipoPerfil;
 import java.util.ArrayList;
 
 /**
@@ -13,12 +13,20 @@ import java.util.ArrayList;
  * @author sjpin
  */
 public class Operador extends Cliente{
+    private int sueldo;
     
-        private int sueldo;
-
-    
-    public Operador(String cedula, String nombres, int edad, String correo, String usuario, String contrasena, TipoPerfil TipoPerfil) {
-        super(cedula, nombres, edad, correo, usuario, contrasena, TipoPerfil);
+    /**
+     * Constructor que crea objetos de tipo Operador
+     * @param cedula
+     * @param nombres
+     * @param edad
+     * @param correo
+     * @param usuario
+     * @param contrasena
+     * @param tipoPerfil
+     */
+    public Operador(String cedula, String nombres, int edad, String correo, String usuario, String contrasena, TipoPerfil tipoPerfil) {
+        super(cedula, nombres, edad, correo, usuario, contrasena, tipoPerfil);
         ArrayList<String[]> datosClientes = LeerValidando("operadores.txt", true);
         for (String[] dato : datosClientes) {
             if (dato[0].equals(cedula)) {
@@ -27,8 +35,28 @@ public class Operador extends Cliente{
         }
     }
     
-    public void consultarUsuarios(ArrayList<Usuario> listaUsuarios){
-        
+    /**
+     * Metodo que retorna en formato int el sueldo del operador
+     * @return int
+     */
+    public int getSueldo() {
+        return sueldo;
+    }
+
+    /**
+     * Metodo set para el sueldo del operador
+     * @param sueldo
+     */
+    public void setSueldo(int sueldo) {
+        this.sueldo = sueldo;
     }
     
+    
+    public void consultarUsuarios(ArrayList<Usuario> listaUsuarios){
+        
+    }     
+
+    void consultarReservas() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
