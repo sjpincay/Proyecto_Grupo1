@@ -1,19 +1,16 @@
-package ManejoArchivos;
-
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package ManejoArchivos;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-
 /**
  *
- * @author Verónica
+ * @author sjpin
  */
-public class ManejoArchivos {
+public class ManejoArchivos{
 
     /**
      * Este metodo lee el archivo y devuelve las lineas del mismo en formato ArrayList
@@ -111,8 +108,6 @@ public class ManejoArchivos {
         }
         
         return datos;
-    }
-   
-
-   
+    } 
 }
+
