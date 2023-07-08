@@ -51,10 +51,12 @@ public class Sistema {
                 case "S" -> {
                     u = new Cliente(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
                     listaUsuarios.add(u);
+                    break;
                 }
                 case "E" -> {
                     u = new ClienteEstrella(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
                     listaUsuarios.add(u);
+                    break;
                 }
                 case "O" -> {
                     u = new Operador(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
@@ -89,7 +91,7 @@ public class Sistema {
     
     
     public static void cargarVehiculos(){
-        ArrayList<String[]> vehiculo= LeerValidando("vehichulos.txt",true);
+        ArrayList<String[]> vehiculo= LeerValidando("vehiculos.txt",true);
         
         Vehiculo v;
         
@@ -112,13 +114,15 @@ public class Sistema {
         String password = sc.nextLine();
 
         //CARGANDO LISTAS
-        Sistema.cargarUsuarios();
         Sistema.cargarMultas();
         Sistema.cargarVehiculos();
+        Sistema.cargarUsuarios();
+        
+        
 
         //VALIDANDO INFORMACION
         for (Usuario usuario : listaUsuarios) {
-            if (usuario.getUsuario().equals(user) && usuario.getPassword().equals(password)) {
+            if (usuario.getUsuario().equals(user) && usuario.getContrasena().equals(password)) {
                 System.out.println("INGRESO EXITOSO");
                 //COMPROBRANDO SI EL USUARIO ES CLIENTE 
                 if (usuario instanceof Cliente cliente) {
@@ -190,7 +194,7 @@ public class Sistema {
                         }
                     }
                 }
-            } else if (!usuario.getUsuario().equals(user) && usuario.getPassword().equals(password)) {
+            } else if (!usuario.getUsuario().equals(user) && usuario.getContrasena().equals(password)) {
                 System.out.println("Usuario o contraseña incorrectos");
             }
         }

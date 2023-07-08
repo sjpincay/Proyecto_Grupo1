@@ -21,7 +21,7 @@ public class Cliente extends Usuario{
     
     public Cliente(String cedula, String nombres, int edad, String correo, String usuario, String Password, TipoPerfil tipoPerfil) {
         super(cedula, nombres, edad, correo, usuario, Password, tipoPerfil);
-
+        listVehiculos =  initVehiculos();
         for (String[] dato : datosClientes) {
             if (dato[0].equals(cedula)) {
                 this.numTarjetaCredito = dato[1];
@@ -30,11 +30,26 @@ public class Cliente extends Usuario{
         }
     }
     
+    private ArrayList<Vehiculo> initVehiculos(){
+        ArrayList<Vehiculo> vehiculosTo =  Sistema.listaVehiculoss;
+        ArrayList<Vehiculo> vehiculoReturn = new ArrayList<>();
+        for(Vehiculo vehiculo: vehiculosTo){
+            if(vehiculo.getOwner().equals(super.cedula)){
+                vehiculoReturn.add(vehiculo);
+            }
+        }
+        
+        return vehiculoReturn;
+    }
+    
     @Override
     public void consultarMultas() {
         int opcion=0;
         Scanner sc = new Scanner(System.in);
+        
         do{
+            System.out.println("Desea ver las multas con su numero de cedula (1) + "
+                    + "\nO desea ver con su placa(2): ");
             opcion=sc.nextInt();
             sc.nextLine();
         }while(opcion > 2 || opcion < 1);
@@ -131,11 +146,6 @@ public class Cliente extends Usuario{
         this.puntosLicencia = puntosLicencia;
     }   
 
-    public void mostrarMenu() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    public void consultar_multas() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+   
 }
