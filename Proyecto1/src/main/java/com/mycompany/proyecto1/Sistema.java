@@ -49,15 +49,15 @@ public class Sistema {
         for (String[] dato : datosUsuarios) {
             switch (dato[6]) {
                 case "S" -> {
-                    u = new Cliente(dato[0], dato[1], Integer.valueOf(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
+                    u = new Cliente(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
                     listaUsuarios.add(u);
                 }
                 case "E" -> {
-                    u = new ClienteEstrella(dato[0], dato[1], Integer.valueOf(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
+                    u = new ClienteEstrella(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
                     listaUsuarios.add(u);
                 }
                 case "O" -> {
-                    u = new Operador(dato[0], dato[1], Integer.valueOf(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
+                    u = new Operador(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
                     listaUsuarios.add(u);
                 }
             }
@@ -82,7 +82,7 @@ public class Sistema {
                 Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            m= new Multa(dato[0],dato[1],dato[2],Double.parseDouble(dato[3]), fecha1,fecha2,Integer.valueOf(dato[6]));
+            m= new Multa(dato[0],dato[1],dato[2],Double.valueOf(dato[3]), fecha1,fecha2,Integer.parseInt(dato[6]));
             listaMultlas.add(m);
         }
     }
