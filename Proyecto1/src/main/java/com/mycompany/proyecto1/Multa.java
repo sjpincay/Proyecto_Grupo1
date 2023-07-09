@@ -13,6 +13,9 @@ import java.util.Objects;
  *
  * @author wal26
  */
+/**
+ * Clase que representa una multa.
+ */
 public class Multa {
     private String cedula;
     private String placa;
@@ -22,6 +25,17 @@ public class Multa {
     private Date fechaNotificacion;
     private int puntos;
 
+    /**
+     * Constructor de la clase Multa.
+     *
+     * @param cedula            Cédula del infractor
+     * @param placa             Placa del vehículo infractor
+     * @param infraccion        Descripción de la infracción
+     * @param valor             Valor de la multa
+     * @param fechaInfraccion   Fecha de la infracción
+     * @param fechaNotificacion Fecha de notificación de la multa
+     * @param puntos            Puntos asociados a la infracción
+     */
     public Multa(String cedula, String placa, String infraccion, Double valor, Date fechaInfraccion, Date fechaNotificacion, int puntos) {
         this.cedula = cedula;
         this.placa = placa;
@@ -95,7 +109,6 @@ public class Multa {
                 + format.format(fechaInfraccion) + " | " + format.format(fechaNotificacion) + " | " + puntos;
     }
 
-    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -119,7 +132,4 @@ public class Multa {
         }
         return Objects.equals(this.fechaInfraccion, other.fechaInfraccion);
     }
-    
-    
-       
 }
