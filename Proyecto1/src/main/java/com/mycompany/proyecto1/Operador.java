@@ -16,34 +16,37 @@ import java.util.Scanner;
  *
  * @author sjpin
  */
-public class Operador extends Cliente {
-
+/**
+ * Clase que representa un operador.
+ */
+public class Operador extends Usuario {
     private int sueldo;
 
     /**
-     * Constructor que crea objetos de tipo Operador
+     * Constructor de la clase Operador.
      *
-     * @param cedula
-     * @param nombres
-     * @param edad
-     * @param correo
-     * @param usuario
-     * @param contrasena
-     * @param tipoPerfil
+     * @param cedula      Cédula del operador
+     * @param nombres     Nombres del operador
+     * @param edad        Edad del operador
+     * @param correo      Correo electrónico del operador
+     * @param usuario     Usuario del operador
+     * @param Password    Contraseña del operador
+     * @param tipoPerfil  Tipo de perfil del operador
      */
-    public Operador(String cedula, String nombres, int edad, String correo, String usuario, String contrasena, TipoPerfil tipoPerfil) {
-        super(cedula, nombres, edad, correo, usuario, contrasena, tipoPerfil);
+    public Operador(String cedula, String nombres, int edad, String correo, String usuario, String Password, TipoPerfil tipoPerfil) {
+        super(cedula, nombres, edad, correo, usuario, Password, tipoPerfil);
         ArrayList<String[]> datosClientes = LeerValidando("operadores.txt", true);
         for (String[] dato : datosClientes) {
             if (dato[0].equals(cedula)) {
-                this.sueldo = Integer.valueOf(dato[1]);
+                this.sueldo = Integer.parseInt(dato[1]);
             }
         }
     }
 
-    @Override
+    /**
+     * Método para consultar las multas del operador.
+     */
     public void consultarMultas() {
-
         System.out.println("""
                            ---------------------------------------------------------------
                                                 Consultar Multas
@@ -60,33 +63,37 @@ public class Operador extends Cliente {
 
         ArrayList<Multa> multas = Sistema.listaMultlas;
 
-        //Filtras lista por meses
+        // Filtrar lista por meses
         for (Multa multa : multas) {
             if (Integer.parseInt(format.format(multa.getFechaInfraccion())) == Integer.parseInt(mes)) {
                 System.out.println(multa);
             }
         }
-
     }
 
     /**
-     * Metodo que retorna en formato int el sueldo del operador
+     * Método que retorna el sueldo del operador.
      *
-     * @return int
+     * @return Sueldo del operador
      */
     public int getSueldo() {
         return sueldo;
     }
 
     /**
-     * Metodo set para el sueldo del operador
+     * Método set para el sueldo del operador.
      *
-     * @param sueldo
+     * @param sueldo Sueldo del operador
      */
     public void setSueldo(int sueldo) {
         this.sueldo = sueldo;
     }
 
+    /**
+     * Método para consultar los usuarios del sistema.
+     *
+     * @param listaUsuarios Lista de usuarios del sistema
+     */
     public void consultarUsuarios(ArrayList<Usuario> listaUsuarios) {
         for (Usuario user : listaUsuarios) {
             if (user instanceof Operador operador) {
@@ -96,16 +103,18 @@ public class Operador extends Cliente {
             } else if (user instanceof Cliente cliente) {
                 System.out.println(cliente + " | CLIENTE ESTANDAR |" + user.getCedula());
             }
-
         }
     }
 
+    /**
+     * Método para registrar un pago.
+     */
     public void registrarPago() {
         Scanner entrada = new Scanner(System.in);
         System.out.println("Ingrese su numero de cedula: ");
         String cedulaInput = entrada.nextLine();
 
-        Cliente cliente = null;
+        Clientee cliente = null;
         int opcionPagar = 0;
         int opcionMetodo = 0;
         int opcionConfirmar = 0;
@@ -114,8 +123,7 @@ public class Operador extends Cliente {
         int indexRevision = 0;
         ArrayList<Integer> indexMultas = new ArrayList<>();
         for (Usuario user : Sistema.listaUsuarios) {
-
-            if (user instanceof Cliente cliente1 && user.getTipoPerfil() != TipoPerfil.O) {
+            if (user instanceof Clientee cliente1 && user.getTipoPerfil() != TipoPerfil.O) {
                 if (!user.getCedula().equals(cedulaInput)) {
                     continue;
                 }
@@ -138,71 +146,65 @@ public class Operador extends Cliente {
 
         Pago pago;
         String placa;
-        //Obtener la fecha actual
+        // Obtener la fecha actual
         Calendar calendar = Calendar.getInstance();
-
         Date fecha = calendar.getTime();
 
         if (opcionPagar == 1) {
-
-            //Se encuentra el carro asociado o en el caso de que tenga mas de un
-            //auto se pide directamente al usuario con el que se trabajara
+            // Se encuentra el carro asociado o en el caso de que tenga mas de uno
+            // se pide directamente al usuario con el que se trabajará
             Vehiculo vehiCliente = cliente.getListVehiculos().get(0);
-            //comprabamos si el usuario posee mas de un carro;
+            // Comprobar si el usuario posee más de un carro
             if (cliente.getListVehiculos().size() > 1) {
                 placa = pedirPlaca();
                 vehiCliente = Vehiculo.getVehiculo(Sistema.listaVehiculoss, placa);
             }
 
-            //verifica si tiene multas
+            // Verificar si tiene multas
             if (vehiCliente.getMultas().isEmpty()) {
                 System.out.println("Ud no posee multas");
                 return;
             }
 
-            valorPagar = vehiCliente.getValor(); //Valor a pagar por multas
+            valorPagar = vehiCliente.getValor(); // Valor a pagar por multas
 
             System.out.println("Valor a pagar: " + valorPagar);
             pago = new Pago(cliente, valorPagar, 'E', valorPagar, fecha, "Multa");
-            
-            //Obteniendo la lista del indices para luego ser borrado
-            for(Multa multa: Sistema.listaMultlas){
-                if(vehiCliente.getMultas().contains(multa)){
+
+            // Obtener la lista de índices para luego ser borrados
+            for (Multa multa : Sistema.listaMultlas) {
+                if (vehiCliente.getMultas().contains(multa)) {
                     indexMultas.add(Sistema.listaMultlas.indexOf(multa));
                 }
             }
-            
         } else {
-
-            //Se obtendra la revision
+            // Se obtendrá la revisión
             Revision rev = Revision.getRevision(Sistema.revisiones, cliente);
             int cantidad = Revision.cantidadRevisiones(Sistema.revisiones, cliente.getCedula());
 
             if (cantidad > 1) {
-                System.out.println("Ud posse mas  de una revision");
+                System.out.println("Ud posee más de una revisión");
                 placa = pedirPlaca();
                 rev = Revision.getRevision(Sistema.revisiones, placa);
-
             }
 
-            //Verificar si existe alguna revision
+            // Verificar si existe alguna revisión
             if (rev == null) {
-                System.out.println("Ud no posee una revision en estos momentos");
+                System.out.println("Ud no posee una revisión en estos momentos");
                 return;
             }
 
             valorPagar = cliente.valorPagar(rev.getPlaca());
             System.out.println("El valor a pagar es: " + valorPagar);
             pago = new Pago(cliente, rev, valorPagar, 'E', valorPagar, fecha, "Revision");
-            indexRevision = Sistema.revisiones.indexOf(rev); //indice para eliminar la revision
-            
+            indexRevision = Sistema.revisiones.indexOf(rev); // índice para eliminar la revisión
         }
         valorPagarTotal = valorPagar;
 
         System.out.println("""
-                           ¿Que Modo de pago va a usar?
+                           ¿Qué modo de pago va a usar?
                            1. Efectivo
-                           2. Tarjeta de credito
+                           2. Tarjeta de crédito
                            """);
         do {
             opcionMetodo = entrada.nextInt();
@@ -216,7 +218,7 @@ public class Operador extends Cliente {
         }
         System.out.println("El valor final a pagar es: " + valorPagarTotal);
         if (valorPagar == 0) {
-            return; //No existe datos a pagar, por lo tanto se retorna
+            return; // No existen datos a pagar, por lo tanto se retorna
         }
 
         System.out.println("""
@@ -240,33 +242,34 @@ public class Operador extends Cliente {
                            -----------------------------------------------------
                            """);
 
-       
-        pago.addPago(); //Se Resgitra el pago
-        
-        if(opcionPagar == 1){
-            //Se borraran las mulas
-            //Como son varias multa se ira borrando una por una de mayor a menor
-            //para que no haya conflicto entre sus indices cuando se ajusten
+        pago.addPago(); // Se registra el pago
+
+        if (opcionPagar == 1) {
+            // Se borrarán las multas
+            // Como son varias multas, se irán borrando una por una de mayor a menor
+            // para que no haya conflicto entre sus índices cuando se ajusten
             System.out.println(indexMultas.size());
-            for(int i=indexMultas.size()-1; i>=0; i--){
-                Sistema.removeMulta((int)indexMultas.get(i));
-                Sistema.listaMultlas.remove((int)indexMultas.get(i));
+            for (int i = indexMultas.size() - 1; i >= 0; i--) {
+                Sistema.removeMulta((int) indexMultas.get(i));
+                Sistema.listaMultlas.remove((int) indexMultas.get(i));
             }
-        }else{
-            //Se borraran las revisiones
+        } else {
+            // Se borrarán las revisiones
             Sistema.removeRevisiones(indexRevision);
             Sistema.revisiones.remove(indexRevision);
-            
         }
-
     }
 
+    /**
+     * Método para pedir la placa al usuario.
+     *
+     * @return Placa ingresada por el usuario
+     */
     private String pedirPlaca() {
         Scanner entrada = new Scanner(System.in);
-        System.out.println("Porfavor ingrese su placa: ");
+        System.out.println("Por favor ingrese su placa: ");
         String placa = entrada.nextLine();
 
         return placa;
     }
-
 }
