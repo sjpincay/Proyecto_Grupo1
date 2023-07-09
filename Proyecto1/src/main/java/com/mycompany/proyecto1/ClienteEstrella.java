@@ -28,4 +28,12 @@ public class ClienteEstrella extends Cliente{
     public ClienteEstrella(String cedula, String nombres, int edad, String correo, String usuario, String Password, TipoPerfil tipoPerfil) {
         super(cedula, nombres, edad, correo, usuario, Password, tipoPerfil);
     }
+
+    @Override
+    public double valorPagar(String placa) {
+        return 150 - 150*0.2;
+    }
+    
+    
+    
 }

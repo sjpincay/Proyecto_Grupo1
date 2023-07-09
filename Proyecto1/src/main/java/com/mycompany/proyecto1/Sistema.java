@@ -9,6 +9,7 @@ package com.mycompany.proyecto1;
  */
 import static ManejoArchivos.ManejoArchivos.LeerValidando;
 import Enums.TipoPerfil;
+import ManejoArchivos.ManejoArchivos;
 import static java.lang.String.format;
 import java.text.DateFormat;
 import static java.text.MessageFormat.format;
@@ -19,11 +20,14 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Sistema {
     static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     static ArrayList<Multa> listaMultlas=new ArrayList<>();
     static ArrayList<Vehiculo> listaVehiculoss=new ArrayList<>();
+    static ArrayList<Date> horarios = new ArrayList<>();
+    static ArrayList<Revision> revisiones = new ArrayList<>();
 
     /**
      * Metodo que imprime el menu del Operador
@@ -71,7 +75,7 @@ public class Sistema {
     public static void cargarMultas(){
         ArrayList <String[]> datosMultas = LeerValidando("multas.txt", true);
         Multa m;
-        DateFormat format = new SimpleDateFormat("dd-mm-YYYY");
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date fecha1=null;
         Date fecha2=null;
         for(String[] dato:datosMultas){
@@ -101,7 +105,52 @@ public class Sistema {
 
         }
     }
+    
+    public static void createRevision(Revision revision){
+        revisiones.add(revision);
+        ManejoArchivos.EscribirArchivo("revisiones.txt", revision.toString());
+    }
+    
+    /**
+     * Metodo que carga los horarios de revisiones y lo guarda en la 
+     * variable estatica horarios, dicha variable es de tipo Date
+     */
+    public static void cargarHorarios(){
+        ArrayList<String> horars= ManejoArchivos.LeerArchivo("horarios.txt");
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        
+        for(String horario: horars){
+            try {
+                horarios.add(format.parse(horario));
+            } catch (ParseException ex) {
+                Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }
+    
+    /**
+     * Carga las revisiones que se han creado
+     */
+    
+    public static void cargarRevisiones(){
+        ArrayList<String[]> revisionesTotales= ManejoArchivos.LeerValidando("revisiones.txt", true);
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        Date fecha = null;
+        for(String[] revision: revisionesTotales){
+            try {
+                fecha = format.parse(revision[3]);
+            } catch (ParseException ex) {
+                Logger.getLogger(Sistema.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           revisiones.add(new Revision(Integer.parseInt(revision[0]), revision[1], revision[2], fecha));
+        }
+    }
 
+    public static void removeHorarario(Date horario){
+        //el arrayList de horarios es paralelo al fichero
+        
+    }
     public static void main(String[] args) {
         //INICIO DE SESION
         System.out.println("++++++++++++++++++++++++++++++++++++++++");
@@ -117,8 +166,8 @@ public class Sistema {
         Sistema.cargarMultas();
         Sistema.cargarVehiculos();
         Sistema.cargarUsuarios();
-        
-        
+        Sistema.cargarHorarios();
+        Sistema.cargarRevisiones();
 
         //VALIDANDO INFORMACION
         for (Usuario usuario : listaUsuarios) {

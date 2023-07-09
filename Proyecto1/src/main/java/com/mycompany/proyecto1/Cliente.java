@@ -9,13 +9,16 @@ package com.mycompany.proyecto1;
 //import java.util.ArrayList;
 import static ManejoArchivos.ManejoArchivos.LeerValidando;
 import Enums.TipoPerfil;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Cliente extends Usuario{
     private String numTarjetaCredito;
     private int puntosLicencia;
     private ArrayList<Vehiculo> listVehiculos;
+    private ArrayList<Date> horarios = Sistema.horarios;
     ArrayList<String[]> datosClientes = LeerValidando("clientes.txt", true);
     Scanner sc = new Scanner(System.in);
     
@@ -29,6 +32,7 @@ public class Cliente extends Usuario{
             }
         }
     }
+    
     
     private ArrayList<Vehiculo> initVehiculos(){
         ArrayList<Vehiculo> vehiculosTo =  Sistema.listaVehiculoss;
@@ -103,18 +107,44 @@ public class Cliente extends Usuario{
             //Entra si tiene multas
             System.out.println("Lo siento, usted tiene multas pendientes");
             vehiculoRevision.mostrarMultas();
+            return;
         }
+        
+        
+        System.out.println("Ud No tiene multas, Porfavor escoja un horario");
+        int contador = 1;
+        int opcionHorario = 0;
+        
+        for (Date horario : horarios) {
+            System.out.println(contador+". " + horario);
+            contador++;
+        }
+        
+        
+        do {            
+            System.out.println("Elija el horario para la revision: ");
+            opcionHorario = sc.nextInt();
+            sc.nextLine(); //limpiando el buffer
+        } while (opcionHorario > horarios.size() || opcionHorario <= 0);
+        
+        //Obtenemos la fecha seleccionada
+        Date fecha = horarios.get(opcionHorario);
+
+        System.out.println(this + "Se ha registrado su cita para "
+                + new SimpleDateFormat("dd-MM-yyyy").format(fecha) +
+                " a las " + new SimpleDateFormat("HH::ss").format(fecha) );
+        
+        System.out.println("Valor a pagar " + valorPagar(placa));
+        
+        Revision revision = new Revision(super.cedula, placa, fecha);
+        revision.addRevision();
+        System.out.println("\nPuede pagar su cita hasta las 24 horas antes de la cita");
+        System.out.println("De lo contrario la cita se cancelara");
+        
     }
     
     public double valorPagar(String placa){
         double base = 150.0;
-        TipoPerfil TipoPerfil = null;
-        
-        if(TipoPerfil == TipoPerfil.E){
-            return base - base*0.2;
-        }
-        //En esta parte accede los tipo cliente
-        
         int puntosPerdido = 0;
         
         //Obtener la cantidad de puntos
@@ -146,6 +176,11 @@ public class Cliente extends Usuario{
         this.puntosLicencia = puntosLicencia;
     }   
 
+    @Override
+    public String toString() {
+        return super.nombres; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+    }
 
-   
+
+    
 }
