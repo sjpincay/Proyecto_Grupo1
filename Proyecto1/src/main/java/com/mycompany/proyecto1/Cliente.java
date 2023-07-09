@@ -180,10 +180,7 @@ public class Cliente extends Usuario{
         this.puntosLicencia = puntosLicencia;
     }   
 
-    @Override
-    public String toString() {
-        return super.nombres; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-    }
+    
 
 
     

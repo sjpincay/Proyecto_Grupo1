@@ -140,8 +140,8 @@ public abstract class Usuario {
      * @return String
      */
     @Override
-    public String toString(){
-        return "Cedula: "+cedula+", nombres: "+nombres+",edad: "+edad+", correo: "+correo+",contrasena: "+contrasena+",categoria: "+tipoPerfil;
+    public String toString() {
+        return nombres; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
     
     /**

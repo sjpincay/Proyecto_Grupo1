@@ -4,6 +4,8 @@
  */
 package com.mycompany.proyecto1;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -87,8 +89,9 @@ public class Multa {
 
     @Override
     public String toString() {
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         return cedula + " | " + placa + " | " + infraccion + " | " + valor + " | "
-                + fechaInfraccion + " | " + fechaNotificacion + " | " + puntos;
+                + format.format(fechaInfraccion) + " | " + format.format(fechaNotificacion) + " | " + puntos;
     }
     
        

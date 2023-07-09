@@ -54,22 +54,21 @@ public class Sistema {
      */
     public static void cargarUsuarios() {
         ArrayList<String[]> datosUsuarios = LeerValidando("usuarios.txt", true);
-        Usuario u;
         for (String[] dato : datosUsuarios) {
             switch (dato[6]) {
                 case "S" -> {
-                    u = new Cliente(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
-                    listaUsuarios.add(u);
+                    listaUsuarios.add(new Cliente(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6])));
+                    
                     break;
                 }
                 case "E" -> {
-                    u = new ClienteEstrella(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
-                    listaUsuarios.add(u);
+                    listaUsuarios.add(new ClienteEstrella(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6])));
                     break;
                 }
                 case "O" -> {
-                    u = new Operador(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6]));
-                    listaUsuarios.add(u);
+                    
+                    listaUsuarios.add(new Operador(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6])));
+                    ;
                 }
             }
         }
@@ -198,8 +197,37 @@ public class Sistema {
         for (Usuario usuario : listaUsuarios) {
             if (usuario.getUsuario().equals(user) && usuario.getContrasena().equals(password)) {
                 System.out.println("INGRESO EXITOSO");
+                
+                //COMPROBANDO SI EL USUARIO ES OPERADOR
+                if (usuario instanceof Operador operador) {
+                    System.out.println("Entroaaa");
+                    Sistema.mostrarMenuOperador();
+                    int opc2 = 0;
+                    while (opc2 != 3) {
+                        System.out.println("Ingrese opcion: ");
+                        opc2 = sc.nextInt();
+                        sc.nextLine();
+                        switch (opc2) {
+                            case 3 -> {
+                                operador.consultarUsuarios(listaUsuarios);
+                                Sistema.mostrarMenuOperador();
+                                break;
+                            }
+                            case 2 -> {
+                                operador.consultarMultas();
+                                Sistema.mostrarMenuOperador();
+                                break;
+                            }
+                            case 1 -> {
+                            }
+                            default -> System.out.println("Opcion invalida");
+                        }
+                    }
+                }
+                
                 //COMPROBRANDO SI EL USUARIO ES CLIENTE 
-                if (usuario instanceof Cliente cliente) {
+                if (usuario instanceof Cliente) {
+                    Cliente cliente = (Cliente) usuario;
                     //COMPRANDO SI EL CLIENTE ES CLIENTE ESTRELLA
                     if (cliente instanceof ClienteEstrella clienteEstrella) {
                         Sistema.mostrarMenuCliente();
@@ -245,29 +273,7 @@ public class Sistema {
                         }
                     }
                 }
-                //COMPROBANDO SI EL USUARIO ES OPERADOR
-                if (usuario instanceof Operador operador) {
-                    Sistema.mostrarMenuOperador();
-                    int opc2 = 0;
-                    while (opc2 != 3) {
-                        System.out.println("Ingrese opcion: ");
-                        opc2 = sc.nextInt();
-                        sc.nextLine();
-                        switch (opc2) {
-                            case 1 -> {
-                                operador.consultarUsuarios(listaUsuarios);
-                                Sistema.mostrarMenuOperador();
-                            }
-                            case 2 -> {
-                                operador.consultarReservas();
-                                Sistema.mostrarMenuOperador();
-                            }
-                            case 3 -> {
-                            }
-                            default -> System.out.println("Opcion invalida");
-                        }
-                    }
-                }
+                
             } else if (!usuario.getUsuario().equals(user) && usuario.getContrasena().equals(password)) {
                 System.out.println("Usuario o contraseña incorrectos");
             }
