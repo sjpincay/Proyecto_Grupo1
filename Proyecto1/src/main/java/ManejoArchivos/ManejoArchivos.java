@@ -109,6 +109,11 @@ public class ManejoArchivos{
         
         return datos;
     } 
+    /**
+     * Este método elimina una línea en específico y las restantes las agrega en un archivo temporal y las rees cribe en otro que reemplaza al original
+     * @param ruta es el archivo del cual se eliminará la línea
+     * @param linea es la línea a eliminar 
+     */
     public void EliminarLinea(String ruta, int linea){
         // Ruta del archivo
         String rutaArchivo = ruta;
