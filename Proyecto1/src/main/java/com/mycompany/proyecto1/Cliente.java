@@ -14,61 +14,81 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-public class Cliente extends Usuario{
+public class Cliente extends Usuario {
     private String numTarjetaCredito;
     private int puntosLicencia;
     private final ArrayList<Vehiculo> listVehiculos = initVehiculos();
-    private final ArrayList<Date> horarios = Sistema.horarios;
-    ArrayList<String[]> datosClientes = LeerValidando("clientes.txt", true);
-    Scanner sc = new Scanner(System.in);
-    
+    private final ArrayList<Date> horarios = Sistema.horarios; // Corregido el nombre del tipo de lista
+    private final ArrayList<String[]> datosClientes = LeerValidando("clientes.txt", true);
+    private final Scanner sc = new Scanner(System.in);
+
+    /**
+     * Constructor de la clase Cliente.
+     *
+     * @param cedula      Cédula del cliente
+     * @param nombres     Nombres del cliente
+     * @param edad        Edad del cliente
+     * @param correo      Correo electrónico del cliente
+     * @param usuario     Usuario del cliente
+     * @param Password    Contraseña del cliente
+     * @param tipoPerfil  Tipo de perfil del cliente
+     */
     public Cliente(String cedula, String nombres, int edad, String correo, String usuario, String Password, TipoPerfil tipoPerfil) {
-        super(cedula, nombres, edad, correo, usuario, Password, tipoPerfil);       
+        super(cedula, nombres, edad, correo, usuario, Password, tipoPerfil);
+        
+        // Recuperar datos del cliente desde un archivo (clientes.txt) y asignarlos a las variables correspondientes
         for (String[] dato : datosClientes) {
             if (dato[0].equals(cedula)) {
                 this.numTarjetaCredito = dato[1];
-                this.puntosLicencia=Integer.parseInt(dato[2]);
+                this.puntosLicencia = Integer.parseInt(dato[2]);
             }
         }
     }
-    
-    
-    private ArrayList<Vehiculo> initVehiculos(){
-        ArrayList<Vehiculo> vehiculosTo =  Sistema.listaVehiculoss;
+
+    /**
+     * Método privado que inicializa la lista de vehículos del cliente.
+     *
+     * @return ArrayList de vehículos pertenecientes al cliente.
+     */
+    private ArrayList<Vehiculo> initVehiculos() {
+        ArrayList<Vehiculo> vehiculosTo = Sistema.listaVehiculoss;
         ArrayList<Vehiculo> vehiculoReturn = new ArrayList<>();
-        for(Vehiculo vehiculo: vehiculosTo){
-            if(vehiculo.getOwner().equals(super.cedula)){
+        for (Vehiculo vehiculo : vehiculosTo) {
+            if (vehiculo.getOwner().equals(super.cedula)) {
                 vehiculoReturn.add(vehiculo);
             }
         }
-        
         return vehiculoReturn;
     }
-    
+
+    /**
+     * Método para consultar las multas del cliente.
+     */
     @Override
     public void consultarMultas() {
-        int opcion=0;
+        int opcion = 0;
         Scanner entrada = new Scanner(System.in);
         
-        do{
+        do {
             System.out.println("""
-                               Desea ver las multas con su numero de cedula (1) + 
-                               O desea ver con su placa(2): """);
-            opcion=entrada.nextInt();
+                    Desea ver las multas con su número de cédula (1) +
+                    o desea ver con su placa (2): """);
+            opcion = entrada.nextInt();
             entrada.nextLine();
-        }while(opcion > 2 || opcion < 1);
+        } while (opcion > 2 || opcion < 1);
         
-        switch(opcion){
+        switch (opcion) {
             case 1 -> {
                 System.out.println("Ingrese su cédula: ");
-                String cedulaInput  = entrada.nextLine();
+                String cedulaInput = entrada.nextLine();
                 
-                if(!cedulaInput.equals(this.cedula)){
-                    System.out.println("Sus datos no coinciden, intentelo nuevamente");
+                if (!cedulaInput.equals(this.cedula)) {
+                    System.out.println("Sus datos no coinciden, intente nuevamente");
                     return;
                 }
-                for(Vehiculo vehiculo: listVehiculos){
-                    //Si es cedula es en caso general
+                
+                for (Vehiculo vehiculo : listVehiculos) {
+                    // Si se selecciona la opción de cédula, se muestra las multas de todos los vehículos del cliente
                     vehiculo.mostrarMultas();
                 }
                 break;
@@ -76,115 +96,122 @@ public class Cliente extends Usuario{
                 
             case 2 -> {
                 System.out.println("Ingrese su placa: ");
-                String placa  = entrada.nextLine();
+                String placa = entrada.nextLine();
                  
-                for(Vehiculo vehiculo: listVehiculos){
-                    
-                    if(!vehiculo.getPlaca().equals(placa)) continue;
-                    vehiculo.mostrarMultas();
+                for (Vehiculo vehiculo : listVehiculos) {
+                    // Si se selecciona la opción de placa, se muestra las multas del vehículo con la placa ingresada
+                    if (vehiculo.getPlaca().equals(placa)) {
+                        vehiculo.mostrarMultas();
+                        break;
+                    }
                 }
             }
-                
+        }
+    }
+
+    /**
+     * Método para agendar una revisión técnica.
+     */
+    public void agendarRevisionTecnica() {
+        System.out.println("Ingrese su placa: ");
+        String placa = sc.nextLine();
+        Vehiculo vehiculoRevision = null;
+        
+        for (Vehiculo vehiculo : listVehiculos) {
+            if (vehiculo.getPlaca().equals(placa)) {
+                vehiculoRevision = vehiculo;
+                break;
+            }
         }
         
-    }
-    
-    
-    public void agendarRevisionTecnica(){
-        System.out.println("Ingrese su placa: ");
-        String placa= sc.nextLine();
-        Vehiculo vehiculoRevision  = null;
-        for(Vehiculo vehiculo: listVehiculos){
-            if(!vehiculo.getPlaca().equals(placa)) continue;
-            vehiculoRevision = vehiculo;
-                
-        }
-        if(vehiculoRevision == null){
-            System.out.println("No se encontro su vehiculo en la base de datos");
+        if (vehiculoRevision == null) {
+            System.out.println("No se encontró su vehículo en la base de datos");
             return;
         }
-        if(!(vehiculoRevision.getMultas().isEmpty())){
-            //Entra si tiene multas
+        
+        if (!vehiculoRevision.getMultas().isEmpty()) {
+            // Entra si tiene multas
             System.out.println("Lo siento, usted tiene multas pendientes");
             vehiculoRevision.mostrarMultas();
             return;
         }
         
-        
-        System.out.println("Ud No tiene multas, Porfavor escoja un horario");
+        System.out.println("Ud. no tiene multas, por favor elija un horario");
         int contador = 1;
         int opcionHorario = 0;
         
         for (Date horario : horarios) {
-            System.out.println(contador+". " + horario);
+            System.out.println(contador + ". " + horario);
             contador++;
         }
         
-        
-        do {            
-            System.out.println("Elija el horario para la revision: ");
+        do {
+            System.out.println("Elija el horario para la revisión: ");
             opcionHorario = sc.nextInt();
-            sc.nextLine(); //limpiando el buffer
+            sc.nextLine(); // Limpiando el buffer
         } while (opcionHorario > horarios.size() || opcionHorario <= 0);
         
-        //Obtenemos la fecha seleccionada
-        Date fecha = horarios.get(opcionHorario-1);
+        // Obtenemos la fecha seleccionada
+        Date fecha = horarios.get(opcionHorario - 1);
 
         System.out.println(this + "Se ha registrado su cita para "
                 + new SimpleDateFormat("dd-MM-yyyy").format(fecha) +
-                " a las " + new SimpleDateFormat("HH::ss").format(fecha) );
+                " a las " + new SimpleDateFormat("HH::ss").format(fecha));
         
-        System.out.println("Valor a pagar " + valorPagar(placa));
+        System.out.println("Valor a pagar: " + valorPagar(placa));
         
         Revision revision = new Revision(super.cedula, placa, fecha);
         
-        revision.addRevision();//Añadir revision a base de datos
-        horarios.remove(opcionHorario-1); //Se quita un horario disponible
-        Sistema.removeHorarario(opcionHorario-1);
-        System.out.println("\nPuede pagar su cita hasta las 24 horas antes de la cita");
-        System.out.println("De lo contrario la cita se cancelara");
-        
+        revision.addRevision(); // Añadir revisión a la base de datos
+        horarios.remove(opcionHorario - 1); // Se quita un horario disponible
+        Sistema.removeHorario(opcionHorario - 1);
+        System.out.println("\nPuede pagar su cita hasta 24 horas antes de la cita");
+        System.out.println("De lo contrario, la cita se cancelará");
     }
-    
-    public double valorPagar(String placa){
+
+    /**
+     * Método que calcula el valor a pagar por una revisión técnica.
+     *
+     * @param placa Placa del vehículo
+     * @return Valor a pagar por la revisión técnica
+     */
+    public double valorPagar(String placa) {
         double base = 150.0;
-        int puntosPerdido = 0;
+        int puntosPerdidos = 0;
         
-        //Obtener la cantidad de puntos
+        // Obtener la cantidad de puntos perdidos
         for (Vehiculo vehiculo : listVehiculos) {
-            
-            if(vehiculo.getPlaca().equals(placa)){
-                puntosPerdido = vehiculo.totalPuntosPerdidos();
+            if (vehiculo.getPlaca().equals(placa)) {
+                puntosPerdidos = vehiculo.totalPuntosPerdidos();
+                break;
             }
         }
         
-        return base + (puntosPerdido*10);
+        return base + (puntosPerdidos * 10);
     }
+    
     public String getNumTarjetaCredito() {
         return numTarjetaCredito;
     }
+
     /**
-     * Metodo set para el numero de tarjeta de credito del cliente
-     * @param numTarjetaCredito
+     * Método set para el número de tarjeta de crédito del cliente.
+     *
+     * @param numTarjetaCredito Número de tarjeta de crédito del cliente
      */
     public void setNumTarjetaCredito(String numTarjetaCredito) {
         this.numTarjetaCredito = numTarjetaCredito;
     }
-    
+
     public int getPuntosLicencia() {
         return puntosLicencia;
     }
 
     public void setPuntosLicencia(int puntosLicencia) {
         this.puntosLicencia = puntosLicencia;
-    }   
+    }
 
     public ArrayList<Vehiculo> getListVehiculos() {
         return listVehiculos;
     }
-
-   
-
-
-    
 }
