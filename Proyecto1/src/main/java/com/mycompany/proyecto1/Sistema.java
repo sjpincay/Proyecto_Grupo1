@@ -3,16 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.proyecto1;
-/**
- *
- * @author sjpin
- */
+
 import static ManejoArchivos.ManejoArchivos.LeerValidando;
 import Enums.TipoPerfil;
 import ManejoArchivos.ManejoArchivos;
-import static java.lang.String.format;
 import java.text.DateFormat;
-import static java.text.MessageFormat.format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,8 +15,18 @@ import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
+
+/**
+ * Clase principal, en esta clase se encontrara el metodo main y es el nucleo del programa
+ * Ademas es la unica clase que interaccionara directamente con los ficheros
+ * Dispone de metodos estaticos para leer, escribir y borrar datos de los ficheros depenediendo de lo que se hara
+ * ninguna otra clase tiene los derechos de proder interactuar con los ficheros
+ * se lo realiza de esta forma para tener una estructura mas organizada tratando de simular una base de datos 
+ * y servidor que puede obtener estos datos y enviarle a algun programa que los trate para mostrarlo
+ * 
+ * @author sjpin
+ */
 public class Sistema {
     static ArrayList<Usuario> listaUsuarios = new ArrayList<>();
     static ArrayList<Multa> listaMultlas=new ArrayList<>();
@@ -72,6 +77,10 @@ public class Sistema {
     }
     
     
+    /**
+     * Interactuando con el archivo multas.txt para poder obtener la informacion
+     * y ponerla a disposicion al sitema
+     */
     public static void cargarMultas(){
         ArrayList <String[]> datosMultas = LeerValidando("multas.txt", true);
         Multa m;
@@ -94,6 +103,11 @@ public class Sistema {
     }
     
     
+    
+    /**
+     * Interactuando con el archivo vehiculos.txt para poder obtener la informacion
+     * y ponerla a disposicion al sitema
+     */
     public static void cargarVehiculos(){
         ArrayList<String[]> vehiculo= LeerValidando("vehiculos.txt",true);
         
@@ -106,6 +120,10 @@ public class Sistema {
         }
     }
     
+    /**
+     * Metodo que permite registrar la revision en el fichero
+     * @param revision Revision que se desea guardar
+     */
     public static void createRevision(Revision revision){
         revisiones.add(revision);
         ManejoArchivos.EscribirArchivo("revisiones.txt", revision.toString());
@@ -130,7 +148,8 @@ public class Sistema {
     }
     
     /**
-     * Carga las revisiones que se han creado
+     * Interactua con el fichero revisiones.txr para obtener la informacion
+     * y ponerla a dispocion del sistema para su posterior uso
      */
     
     public static void cargarRevisiones(){
@@ -147,6 +166,12 @@ public class Sistema {
         }
     }
 
+    
+    /**
+     * Remueve del fichero el horario que un cliente ha sido seleccionado
+     * 
+     * @param horario Que se desea borrar
+     */
     public static void removeHorarario(Date horario){
         //el arrayList de horarios es paralelo al fichero
         

@@ -17,8 +17,8 @@ import java.util.Scanner;
 public class Cliente extends Usuario{
     private String numTarjetaCredito;
     private int puntosLicencia;
-    private ArrayList<Vehiculo> listVehiculos;
-    private ArrayList<Date> horarios = Sistema.horarios;
+    private final ArrayList<Vehiculo> listVehiculos;
+    private final ArrayList<Date> horarios = Sistema.horarios;
     ArrayList<String[]> datosClientes = LeerValidando("clientes.txt", true);
     Scanner sc = new Scanner(System.in);
     
@@ -49,21 +49,22 @@ public class Cliente extends Usuario{
     @Override
     public void consultarMultas() {
         int opcion=0;
-        Scanner sc = new Scanner(System.in);
+        Scanner entrada = new Scanner(System.in);
         
         do{
-            System.out.println("Desea ver las multas con su numero de cedula (1) + "
-                    + "\nO desea ver con su placa(2): ");
-            opcion=sc.nextInt();
-            sc.nextLine();
+            System.out.println("""
+                               Desea ver las multas con su numero de cedula (1) + 
+                               O desea ver con su placa(2): """);
+            opcion=entrada.nextInt();
+            entrada.nextLine();
         }while(opcion > 2 || opcion < 1);
         
         switch(opcion){
             case 1 -> {
                 System.out.println("Ingrese su cédula: ");
-                String cedula  = sc.nextLine();
+                String cedulaInput  = entrada.nextLine();
                 
-                if(!cedula.equals(this.cedula)){
+                if(!cedulaInput.equals(this.cedula)){
                     System.out.println("Sus datos no coinciden, intentelo nuevamente");
                     return;
                 }
@@ -76,7 +77,7 @@ public class Cliente extends Usuario{
                 
             case 2 -> {
                 System.out.println("Ingrese su placa: ");
-                String placa  = sc.nextLine();
+                String placa  = entrada.nextLine();
                  
                 for(Vehiculo vehiculo: listVehiculos){
                     
@@ -137,7 +138,10 @@ public class Cliente extends Usuario{
         System.out.println("Valor a pagar " + valorPagar(placa));
         
         Revision revision = new Revision(super.cedula, placa, fecha);
-        revision.addRevision();
+        
+        revision.addRevision();//Añadir revision a base de datos
+        horarios.remove(opcionHorario-1); //Se quita un horario disponible
+        
         System.out.println("\nPuede pagar su cita hasta las 24 horas antes de la cita");
         System.out.println("De lo contrario la cita se cancelara");
         
