@@ -114,7 +114,7 @@ public class ManejoArchivos{
      * @param ruta es el archivo del cual se eliminará la línea
      * @param linea es la línea a eliminar 
      */
-    public void EliminarLinea(String ruta, int linea){
+    public static void EliminarLinea(String ruta, int linea){
         // Ruta del archivo
         String rutaArchivo = ruta;
         // Número de línea a borrar
@@ -133,11 +133,9 @@ public class ManejoArchivos{
             while ((lineaActual = reader.readLine()) != null) {
                 // Si no es la línea que se desea borrar
                 if (numeroLinea != numeroLineaABorrar) {
-                    // Eliminar los espacios en blanco de la línea
-                    String lineaSinEspacios = lineaActual.replaceAll("\\s", "");
-
+             
                     // Escribir la línea sin espacios en el archivo temporal
-                    writer.write(lineaSinEspacios);
+                    writer.write(lineaActual);
                     writer.newLine();
                 }
 

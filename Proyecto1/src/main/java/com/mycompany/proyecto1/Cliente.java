@@ -129,7 +129,7 @@ public class Cliente extends Usuario{
         } while (opcionHorario > horarios.size() || opcionHorario <= 0);
         
         //Obtenemos la fecha seleccionada
-        Date fecha = horarios.get(opcionHorario);
+        Date fecha = horarios.get(opcionHorario-1);
 
         System.out.println(this + "Se ha registrado su cita para "
                 + new SimpleDateFormat("dd-MM-yyyy").format(fecha) +
@@ -141,7 +141,7 @@ public class Cliente extends Usuario{
         
         revision.addRevision();//Añadir revision a base de datos
         horarios.remove(opcionHorario-1); //Se quita un horario disponible
-        
+        Sistema.removeHorarario(opcionHorario-1);
         System.out.println("\nPuede pagar su cita hasta las 24 horas antes de la cita");
         System.out.println("De lo contrario la cita se cancelara");
         
