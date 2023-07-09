@@ -6,7 +6,16 @@ package com.mycompany.proyecto1;
 
 import static ManejoArchivos.ManejoArchivos.LeerValidando;
 import Enums.TipoPerfil;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+<<<<<<< HEAD
+=======
 import ManejoArchivos.ManejoArchivos;
+>>>>>>> 88d1864b4a525b4f66c2212f96e0cc6e8c40b423
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,7 +62,7 @@ public class Sistema {
      * agregarlos a la lista de Usuarios
      */
     public static void cargarUsuarios() {
-        ArrayList<String[]> datosUsuarios = LeerValidando("usuarios.txt", true);
+        java.util.ArrayList<String[]> datosUsuarios = LeerValidando("usuarios.txt", true);
         for (String[] dato : datosUsuarios) {
             switch (dato[6]) {
                 case "S" -> {
@@ -81,7 +90,7 @@ public class Sistema {
      * y ponerla a disposicion al sitema
      */
     public static void cargarMultas(){
-        ArrayList <String[]> datosMultas = LeerValidando("multas.txt", true);
+        java.util.ArrayList <String[]> datosMultas = LeerValidando("multas.txt", true);
         Multa m;
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date fecha1=null;
@@ -108,7 +117,7 @@ public class Sistema {
      * y ponerla a disposicion al sitema
      */
     public static void cargarVehiculos(){
-        ArrayList<String[]> vehiculo= LeerValidando("vehiculos.txt",true);
+        java.util.ArrayList<String[]> vehiculo= LeerValidando("vehiculos.txt",true);
         
         Vehiculo v;
         
@@ -296,10 +305,6 @@ public class Sistema {
                 System.out.println("Usuario o contraseña incorrectos");
             }
         }
-    }
-
-    void iniciar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
