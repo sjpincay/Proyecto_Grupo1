@@ -7,6 +7,7 @@ package com.mycompany.proyecto1;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -93,6 +94,32 @@ public class Multa {
         return cedula + " | " + placa + " | " + infraccion + " | " + valor + " | "
                 + format.format(fechaInfraccion) + " | " + format.format(fechaNotificacion) + " | " + puntos;
     }
+
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Multa other = (Multa) obj;
+        if (!Objects.equals(this.cedula, other.cedula)) {
+            return false;
+        }
+        if (!Objects.equals(this.placa, other.placa)) {
+            return false;
+        }
+        if (!Objects.equals(this.infraccion, other.infraccion)) {
+            return false;
+        }
+        return Objects.equals(this.fechaInfraccion, other.fechaInfraccion);
+    }
+    
     
        
 }

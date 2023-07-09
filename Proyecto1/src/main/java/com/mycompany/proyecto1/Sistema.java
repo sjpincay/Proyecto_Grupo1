@@ -172,6 +172,7 @@ public class Sistema {
     
     /**
      * Remueve del fichero el horario que un cliente ha sido seleccionado
+     * el indice es el mismo de la lista
      * 
      * @param index indice se desea borrar
      */
@@ -179,6 +180,15 @@ public class Sistema {
         //el arrayList de horarios es paralelo al fichero y al de cliente
         ManejoArchivos.EliminarLinea("horarios.txt", index+1); //la linea empieza en 0
         
+    }
+    public static void removeRevisiones(int index){
+        //el arrayList de horarios es paralelo al fichero y al de cliente
+        ManejoArchivos.EliminarLinea("revisiones.txt", index+1); //la linea empieza en 1
+        
+    }
+    public static void removeMulta(int index){
+        //el arrayList de horarios es paralelo al fichero y al de cliente
+        ManejoArchivos.EliminarLinea("multas.txt", index+1); //la linea empieza en 1
         
     }
     public static void main(String[] args) {

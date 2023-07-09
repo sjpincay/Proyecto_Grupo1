@@ -16,11 +16,13 @@ import java.util.Scanner;
  *
  * @author sjpin
  */
-public class Operador extends Cliente{
+public class Operador extends Cliente {
+
     private int sueldo;
-    
+
     /**
      * Constructor que crea objetos de tipo Operador
+     *
      * @param cedula
      * @param nombres
      * @param edad
@@ -41,37 +43,35 @@ public class Operador extends Cliente{
 
     @Override
     public void consultarMultas() {
-        
+
         System.out.println("""
                            ---------------------------------------------------------------
                                                 Consultar Multas
                            ---------------------------------------------------------------
                            """);
-        
+
         SimpleDateFormat format = new SimpleDateFormat("MM");
         Calendar calendar = Calendar.getInstance();
 
         Date fecha = calendar.getTime();
         String mes = format.format(fecha);
-        
+
         System.out.println("Mes actual: " + mes);
-        
+
         ArrayList<Multa> multas = Sistema.listaMultlas;
-        
+
         //Filtras lista por meses
-        for(Multa multa: multas){
-            if(Integer.parseInt(format.format(multa.getFechaInfraccion())) == Integer.parseInt(mes)){
+        for (Multa multa : multas) {
+            if (Integer.parseInt(format.format(multa.getFechaInfraccion())) == Integer.parseInt(mes)) {
                 System.out.println(multa);
             }
         }
-        
-         
+
     }
-    
-    
-    
+
     /**
      * Metodo que retorna en formato int el sueldo del operador
+     *
      * @return int
      */
     public int getSueldo() {
@@ -80,153 +80,193 @@ public class Operador extends Cliente{
 
     /**
      * Metodo set para el sueldo del operador
+     *
      * @param sueldo
      */
     public void setSueldo(int sueldo) {
         this.sueldo = sueldo;
     }
-    
-    
-    
-    
-    public void consultarUsuarios(ArrayList<Usuario> listaUsuarios){
-        for(Usuario usuario: listaUsuarios){
-            if(usuario instanceof Operador){
-                Operador operador = (Operador) usuario;
-                System.out.println(operador + " | OPERADOR | " + operador.getSueldo());
-            }else if(usuario instanceof ClienteEstrella){
-                ClienteEstrella clienteEstrella = (ClienteEstrella) usuario;
-                System.out.println(clienteEstrella + " | CLIENTE ESTRELLA |" + usuario.getCedula());
-            }else if(usuario instanceof Cliente){
-                Cliente cliente = (Cliente) usuario;
-                System.out.println(cliente + " | CLIENTE ESTANDAR |" + usuario.getCedula());
-            }
-            
-        }
-    }     
 
-    
-    public void registrarPago(){
+    public void consultarUsuarios(ArrayList<Usuario> listaUsuarios) {
+        for (Usuario user : listaUsuarios) {
+            if (user instanceof Operador operador) {
+                System.out.println(operador + " | OPERADOR | " + operador.getSueldo());
+            } else if (user instanceof ClienteEstrella clienteEstrella) {
+                System.out.println(clienteEstrella + " | CLIENTE ESTRELLA |" + user.getCedula());
+            } else if (user instanceof Cliente cliente) {
+                System.out.println(cliente + " | CLIENTE ESTANDAR |" + user.getCedula());
+            }
+
+        }
+    }
+
+    public void registrarPago() {
         Scanner entrada = new Scanner(System.in);
         System.out.println("Ingrese su numero de cedula: ");
         String cedulaInput = entrada.nextLine();
-        
-        
+
         Cliente cliente = null;
         int opcionPagar = 0;
         int opcionMetodo = 0;
         int opcionConfirmar = 0;
-        double valorPagar = 0.0;
-        double valorPagarTotal = 0.0;
-        
-        
-        for(Usuario user: Sistema.listaUsuarios){
-            
-            if(user instanceof Cliente cliente1 && user.getTipoPerfil() != TipoPerfil.O){
-                if(!user.getCedula().equals(cedulaInput)) continue;
+        double valorPagar;
+        double valorPagarTotal;
+        int indexRevision = 0;
+        ArrayList<Integer> indexMultas = new ArrayList<>();
+        for (Usuario user : Sistema.listaUsuarios) {
+
+            if (user instanceof Cliente cliente1 && user.getTipoPerfil() != TipoPerfil.O) {
+                if (!user.getCedula().equals(cedulaInput)) {
+                    continue;
+                }
                 cliente = cliente1;
             }
         }
-        
+        if (cliente == null) {
+            System.out.println("No se encontro ningun cliente");
+            return;
+        }
         System.out.println("""
                            ¿Que desea pagar?
                            1. Multas
                            2. Revision
                            """);
-        do {            
+        do {
             opcionPagar = entrada.nextInt();
             entrada.nextLine();
         } while (opcionPagar > 2 || opcionPagar <= 0);
-        
+
+        Pago pago;
+        String placa;
+        //Obtener la fecha actual
+        Calendar calendar = Calendar.getInstance();
+
+        Date fecha = calendar.getTime();
+
+        if (opcionPagar == 1) {
+
+            //Se encuentra el carro asociado o en el caso de que tenga mas de un
+            //auto se pide directamente al usuario con el que se trabajara
+            Vehiculo vehiCliente = cliente.getListVehiculos().get(0);
+            //comprabamos si el usuario posee mas de un carro;
+            if (cliente.getListVehiculos().size() > 1) {
+                placa = pedirPlaca();
+                vehiCliente = Vehiculo.getVehiculo(Sistema.listaVehiculoss, placa);
+            }
+
+            //verifica si tiene multas
+            if (vehiCliente.getMultas().isEmpty()) {
+                System.out.println("Ud no posee multas");
+                return;
+            }
+
+            valorPagar = vehiCliente.getValor(); //Valor a pagar por multas
+
+            System.out.println("Valor a pagar: " + valorPagar);
+            pago = new Pago(cliente, valorPagar, 'E', valorPagar, fecha, "Multa");
+            
+            //Obteniendo la lista del indices para luego ser borrado
+            for(Multa multa: Sistema.listaMultlas){
+                if(vehiCliente.getMultas().contains(multa)){
+                    indexMultas.add(Sistema.listaMultlas.indexOf(multa));
+                }
+            }
+            
+        } else {
+
+            //Se obtendra la revision
+            Revision rev = Revision.getRevision(Sistema.revisiones, cliente);
+            int cantidad = Revision.cantidadRevisiones(Sistema.revisiones, cliente.getCedula());
+
+            if (cantidad > 1) {
+                System.out.println("Ud posse mas  de una revision");
+                placa = pedirPlaca();
+                rev = Revision.getRevision(Sistema.revisiones, placa);
+
+            }
+
+            //Verificar si existe alguna revision
+            if (rev == null) {
+                System.out.println("Ud no posee una revision en estos momentos");
+                return;
+            }
+
+            valorPagar = cliente.valorPagar(rev.getPlaca());
+            System.out.println("El valor a pagar es: " + valorPagar);
+            pago = new Pago(cliente, rev, valorPagar, 'E', valorPagar, fecha, "Revision");
+            indexRevision = Sistema.revisiones.indexOf(rev); //indice para eliminar la revision
+            
+        }
+        valorPagarTotal = valorPagar;
+
         System.out.println("""
                            ¿Que Modo de pago va a usar?
                            1. Efectivo
                            2. Tarjeta de credito
                            """);
-        do {            
+        do {
             opcionMetodo = entrada.nextInt();
             entrada.nextLine();
         } while (opcionMetodo > 2 || opcionMetodo <= 0);
-        
+
+        if (opcionMetodo == 2) {
+            valorPagarTotal = valorPagar + valorPagar * 0.1;
+            pago.setModoPagar('T');
+            pago.setValorPagarFinal(valorPagarTotal);
+        }
+        System.out.println("El valor final a pagar es: " + valorPagarTotal);
+        if (valorPagar == 0) {
+            return; //No existe datos a pagar, por lo tanto se retorna
+        }
+
         System.out.println("""
                            ¿Desea proceder con el pago?
                            1. Si
                            2. No
                            """);
-        do {            
+        do {
             opcionConfirmar = entrada.nextInt();
             entrada.nextLine();
         } while (opcionConfirmar > 2 || opcionConfirmar <= 0);
-        
-        if(opcionConfirmar == 2){
+
+        if (opcionConfirmar == 2) {
             System.out.println("La solicitud se ha cancelado");
             return;
         }
-        
-        Pago pago = null;
-        String placa = "";
-        //Obtener la fecha actual
-        
-        
-        
-        if(opcionPagar == 1){
-            Vehiculo vehiculo =  cliente.getListVehiculos().get(0);
-            if(cliente.getListVehiculos().size()>1){
-                placa = pedirPlaca();
-            }
-            vehiculo = Vehiculo.getVehiculo(Sistema.listaVehiculoss, placa);
-            
-            valorPagar = vehiculo.getValor(); //Valor a pagar por multas
-            pago = new Pago(cliente, valorPagar, 'E', valorPagar, new Date(), "Multa");
-        }else{
-            
-            //Detectar si tiene mas de una revision
-            Revision rev = null;
-            int cantidad = 0;
-            for(Revision revision: Sistema.revisiones){
-                if(revision.getCedula().equals(cliente.getCedula())){
-                    rev = revision;
-                    cantidad++;
-                }
-            }
-            if (cantidad > 0){
-                placa = pedirPlaca();
-            }
-            valorPagar = cliente.valorPagar(placa);
-            System.out.println("El valor a pagar de la revision es " + valorPagar);
-            
-            pago = new Pago(cliente, rev, valorPagar, 'E', valorPagar, new Date(), "Revision");
-        }
-        
-        if(valorPagar == 0) return; //No existe datos a pagar, por lo tanto se retorna
-        
-        if(opcionMetodo == 2){
-            pago.setModoPagar('T');
-            pago.setValorPagarFinal(valorPagar + valorPagar*0.1);
-        }
-        
-        
+
         System.out.println("""
                            -----------------------------------------------------
                            Se ha registrado el pago
                            -----------------------------------------------------
                            """);
+
+       
+        pago.addPago(); //Se Resgitra el pago
         
-        System.out.println(pago);
-        
+        if(opcionPagar == 1){
+            //Se borraran las mulas
+            //Como son varias multa se ira borrando una por una de mayor a menor
+            //para que no haya conflicto entre sus indices cuando se ajusten
+            System.out.println(indexMultas.size());
+            for(int i=indexMultas.size()-1; i>=0; i--){
+                Sistema.removeMulta((int)indexMultas.get(i));
+                Sistema.listaMultlas.remove((int)indexMultas.get(i));
+            }
+        }else{
+            //Se borraran las revisiones
+            Sistema.removeRevisiones(indexRevision);
+            Sistema.revisiones.remove(indexRevision);
+            
+        }
+
     }
 
-
-    
-   
-    private String pedirPlaca(){
+    private String pedirPlaca() {
         Scanner entrada = new Scanner(System.in);
-        System.out.println("Ud tiene mas de una revision");
         System.out.println("Porfavor ingrese su placa: ");
         String placa = entrada.nextLine();
-        
+
         return placa;
     }
-    
-    
+
 }

@@ -5,7 +5,9 @@
 package com.mycompany.proyecto1;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
@@ -47,6 +49,56 @@ public class Revision {
         this.fechaRevision = fechaRevision;
     }
     
+    public static int cantidadRevisiones(ArrayList<Revision> revisiones, String cedula){
+        int cantidad = 0;
+        for(Revision revision: revisiones){
+            if(revision.getCedula().equals(cedula)){
+                cantidad++;
+            }
+        }
+        
+        return cantidad;
+    }
+    
+    /**
+     * Metodo estatico que devuelve una revision en base a una placa de un auto 
+     * vinculado
+     * @param revisiones
+     * @param placa
+     * @return 
+     */
+    public static Revision getRevision(ArrayList<Revision> revisiones, String placa){
+        Revision revision = null;
+        for(Revision rev: revisiones){
+            if(rev.getPlaca().equals(placa)){
+                revision = rev;
+            }
+        }
+        return revision;
+    }
+    
+    /**
+     * Devulve la revison del cliente, siempre y cuando exista solo 1 asociada
+     * a este, caso contrario devuelve null
+     * @param revisiones
+     * @param cliente
+     * @return 
+     */
+    public static Revision getRevision(ArrayList<Revision> revisiones, Cliente cliente){
+        if(Revision.cantidadRevisiones(revisiones, cliente.getCedula()) > 1){
+            return null;
+        }
+        
+        Revision revision = null;
+        for(Revision rev: revisiones){
+            if(rev.getCedula().equals(cliente.getCedula())){
+                revision = rev;
+            }
+        }
+        return revision;
+    }
+    
+
     public void addRevision(){
         Sistema.createRevision(this);
     }
@@ -66,6 +118,26 @@ public class Revision {
         return codigoRevision + "," + cedula + "," + placa + ","
                 + new SimpleDateFormat("dd-MM-yyy HH:ss").format(fechaRevision);
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Revision other = (Revision) obj;
+        if (this.codigoRevision != other.codigoRevision) {
+            return false;
+        }
+        return Objects.equals(this.placa, other.placa);
+    }
+    
     
     
 }

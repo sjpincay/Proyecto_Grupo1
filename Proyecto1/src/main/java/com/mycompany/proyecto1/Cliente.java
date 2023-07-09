@@ -17,14 +17,13 @@ import java.util.Scanner;
 public class Cliente extends Usuario{
     private String numTarjetaCredito;
     private int puntosLicencia;
-    private final ArrayList<Vehiculo> listVehiculos;
+    private final ArrayList<Vehiculo> listVehiculos = initVehiculos();
     private final ArrayList<Date> horarios = Sistema.horarios;
     ArrayList<String[]> datosClientes = LeerValidando("clientes.txt", true);
     Scanner sc = new Scanner(System.in);
     
     public Cliente(String cedula, String nombres, int edad, String correo, String usuario, String Password, TipoPerfil tipoPerfil) {
-        super(cedula, nombres, edad, correo, usuario, Password, tipoPerfil);
-        listVehiculos =  initVehiculos();
+        super(cedula, nombres, edad, correo, usuario, Password, tipoPerfil);       
         for (String[] dato : datosClientes) {
             if (dato[0].equals(cedula)) {
                 this.numTarjetaCredito = dato[1];
@@ -184,7 +183,7 @@ public class Cliente extends Usuario{
         return listVehiculos;
     }
 
-    
+   
 
 
     

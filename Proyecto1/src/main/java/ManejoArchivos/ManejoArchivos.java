@@ -115,6 +115,7 @@ public class ManejoArchivos{
      * @param linea es la línea a eliminar 
      */
     public static void EliminarLinea(String ruta, int linea){
+        System.out.println("Entro");
         // Ruta del archivo
         String rutaArchivo = ruta;
         // Número de línea a borrar
