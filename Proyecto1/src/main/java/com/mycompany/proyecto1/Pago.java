@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyecto1;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -21,9 +22,11 @@ public class Pago {
     private double valorPagarFinal;
     private Date fechaPago;
     private String razonPago;
+    
+    private static int codigo = 0;
 
     public Pago(Cliente cliente, Revision revision, double valorPagar, char modoPagar, double valorPagarFinal, Date fechaPago, String razonPago) {
-        this.codigoPago = 0;
+        this.codigoPago = codigo++;
         this.cliente = cliente;
         this.revision = revision;
         this.valorPagar = valorPagar;
@@ -38,7 +41,7 @@ public class Pago {
      * Constructor que no requiere reservacion, ya que unicamente sera para
      * pago de multa
      * 
-     * @param codigoPago
+     * 
      * @param cliente
      * @param valorPagar
      * @param modoPagar
@@ -47,7 +50,7 @@ public class Pago {
      * @param razonPago 
      */
     public Pago(Cliente cliente, double valorPagar, char modoPagar, double valorPagarFinal, Date fechaPago, String razonPago) {
-        this.codigoPago = 0;
+        this.codigoPago = codigo++;
         this.cliente = cliente;
         this.valorPagar = valorPagar;
         this.modoPagar = modoPagar;
@@ -58,9 +61,22 @@ public class Pago {
 
     @Override
     public String toString() {
-        return cliente +" + " + valorPagar + "+ 0 + " + razonPago;
+        return codigoPago + "," + cliente.cedula + "," + valorPagar + ","
+                + modoPagar + "," + valorPagarFinal + "," 
+                + new SimpleDateFormat("dd-MM-yyyy").format(fechaPago) + "," +
+                razonPago;
+    }
+
+    public void setModoPagar(char modoPagar) {
+        this.modoPagar = modoPagar;
+    }
+
+    public void setValorPagarFinal(double valorPagarFinal) {
+        this.valorPagarFinal = valorPagarFinal;
     }
     
-    
+    public void addPago(){
+        Sistema.createPago(this);
+    }
     
 }

@@ -43,10 +43,18 @@ public class Vehiculo {
         return multaReturn;
     }
     
-    
+    public static Vehiculo getVehiculo(ArrayList<Vehiculo> vehiculos, String placa){
+        for(Vehiculo vehi: vehiculos){
+            if(vehi.getPlaca().equals(placa)){
+                return vehi;
+            }
+        }
+        
+        return null;
+    }
     
     public double mostrarMultas() {
-        double valorTotal = 0.0;
+        
 
         System.out.println("------------------------------------------------");
         System.out.println("               DETALLE DE MULTAS                ");
@@ -58,9 +66,9 @@ public class Vehiculo {
                     multa.getValor() + " | " + multa.getFechaInfraccion() + " | " + multa.getFechaNotificacion() + " | " +
                     multa.getPuntos());
 
-            valorTotal += multa.getValor();
         }
 
+        double valorTotal = getValor();
         if (valorTotal > 0) {
             
             System.out.println("\n\nTOTAL A PAGAR: " + valorTotal);
@@ -69,6 +77,14 @@ public class Vehiculo {
         return valorTotal;
     }
     
+    
+    public double getValor(){
+        double valorTotal = 0.0;
+        for (Multa multa : multas) {
+            valorTotal += multa.getValor();
+        }
+        return valorTotal;
+    }
     
     
     public int totalPuntosPerdidos() {

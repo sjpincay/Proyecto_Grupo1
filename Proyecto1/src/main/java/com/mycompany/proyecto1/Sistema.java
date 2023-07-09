@@ -146,6 +146,10 @@ public class Sistema {
         
     }
     
+    public static void createPago(Pago pago){
+        ManejoArchivos.EscribirArchivo("pagos.txt", pago.toString());
+    }
+    
     /**
      * Interactua con el fichero revisiones.txr para obtener la informacion
      * y ponerla a dispocion del sistema para su posterior uso
