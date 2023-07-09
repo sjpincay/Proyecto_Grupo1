@@ -180,6 +180,10 @@ public class Cliente extends Usuario{
         this.puntosLicencia = puntosLicencia;
     }   
 
+    public ArrayList<Vehiculo> getListVehiculos() {
+        return listVehiculos;
+    }
+
     
 
 

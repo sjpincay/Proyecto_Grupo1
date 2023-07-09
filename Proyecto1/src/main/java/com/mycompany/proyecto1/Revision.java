@@ -51,6 +51,15 @@ public class Revision {
         Sistema.createRevision(this);
     }
 
+    public String getCedula() {
+        return cedula;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    
     @Override
     public String toString() {
         

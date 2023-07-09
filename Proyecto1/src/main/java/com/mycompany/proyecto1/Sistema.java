@@ -219,6 +219,8 @@ public class Sistema {
                                 break;
                             }
                             case 1 -> {
+                                operador.registrarPago();
+                                Sistema.mostrarMenuOperador();
                             }
                             default -> System.out.println("Opcion invalida");
                         }

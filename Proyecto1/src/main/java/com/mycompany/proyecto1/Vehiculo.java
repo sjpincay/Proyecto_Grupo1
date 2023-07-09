@@ -45,7 +45,7 @@ public class Vehiculo {
     
     
     
-    public void mostrarMultas() {
+    public double mostrarMultas() {
         double valorTotal = 0.0;
 
         System.out.println("------------------------------------------------");
@@ -66,6 +66,7 @@ public class Vehiculo {
             System.out.println("\n\nTOTAL A PAGAR: " + valorTotal);
             System.out.println("\nPara pagar puede acercarse a la agencia más cercana.");
         }
+        return valorTotal;
     }
     
     
