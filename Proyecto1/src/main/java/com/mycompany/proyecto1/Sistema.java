@@ -217,7 +217,7 @@ public class Sistema {
     
     /**
      * 
-     * @param args args
+     * @param args  
      */
     public static void main(String[] args) {
         //INICIO DE SESION
