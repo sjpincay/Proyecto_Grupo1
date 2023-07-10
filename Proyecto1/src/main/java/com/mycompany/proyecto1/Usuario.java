@@ -17,8 +17,17 @@ import Enums.*;
  */
 public abstract class Usuario {
 
+    /**
+     * 
+     */
     protected String cedula, nombres, correo, usuario, contrasena;
+    /**
+     * 
+     */
     protected int edad;
+    /**
+     * 
+     */
     protected TipoPerfil tipoPerfil;
 
     /**

@@ -151,6 +151,10 @@ public class Sistema {
         }
         
     }
+    /**
+     * 
+     * @param pago El pago que se realizo
+     */
         public static void createPago(Pago pago) {
         // Código para crear un pago y guardar la información en un archivo.
     }
@@ -190,16 +194,31 @@ public class Sistema {
         ManejoArchivos.EliminarLinea("horarios.txt", index+1); //la linea empieza en 0
         
     }
+    
+    /**
+     * 
+     * @param index indice a borrar
+     */
     public static void removeRevisiones(int index){
         //el arrayList de horarios es paralelo al fichero y al de cliente
         ManejoArchivos.EliminarLinea("revisiones.txt", index+1); //la linea empieza en 1
         
     }
+    
+    /**
+     * 
+     * @param index indice a borrar
+     */
     public static void removeMulta(int index){
         //el arrayList de horarios es paralelo al fichero y al de cliente
         ManejoArchivos.EliminarLinea("multas.txt", index+1); //la linea empieza en 1
         
     }
+    
+    /**
+     * 
+     * @param args args
+     */
     public static void main(String[] args) {
         //INICIO DE SESION
         System.out.println("++++++++++++++++++++++++++++++++++++++++");
@@ -227,7 +246,7 @@ public class Sistema {
                 if (usuario instanceof Operador operador) {
                     Sistema.mostrarMenuOperador();
                     int opc2 = 0;
-                    while (opc2 != 3) {
+                    while (opc2 != 4) {
                         System.out.println("Ingrese opcion: ");
                         opc2 = sc.nextInt();
                         sc.nextLine();
@@ -245,6 +264,7 @@ public class Sistema {
                             case 1 -> {
                                 operador.registrarPago();
                                 Sistema.mostrarMenuOperador();
+                                break;
                             }
                             default -> System.out.println("Opcion invalida");
                         }

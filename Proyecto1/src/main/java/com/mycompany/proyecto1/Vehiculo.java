@@ -140,66 +140,131 @@ public class Vehiculo {
 
     // Getters y Setters
 
+    /**
+     * 
+     * @return El dueño
+     */
     public String getOwner() {
         return owner;
     }
 
+    
+    /**
+     * 
+     * @param owner Establecer el dueño
+     */
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
+    /**
+     * 
+     * @return Placa
+     */
     public String getPlaca() {
         return placa;
     }
 
+    /**
+     * 
+     * @param placa Establecer la placa
+     */
     public void setPlaca(String placa) {
         this.placa = placa;
     }
 
+    /**
+     * 
+     * @return Marca
+     */
     public String getMarca() {
         return marca;
     }
 
+    /**
+     * 
+     * @param marca Marca
+     */
     public void setMarca(String marca) {
         this.marca = marca;
     }
 
+    /**
+     * 
+     * @return Modelo
+     */
     public String getModelo() {
         return modelo;
     }
 
+    /**
+     * 
+     * @param modelo Modelo
+     */
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
+    /**
+     * 
+     * @return año
+     */
     public String getYear() {
         return year;
     }
 
+    /**
+     * 
+     * @param year Establcer el año
+     */
     public void setYear(String year) {
         this.year = year;
     }
 
+    /**
+     * 
+     * @return chasis
+     */
     public String getChasis() {
         return chasis;
     }
 
+    /**
+     * 
+     * @param chasis Establecer el chasis
+     */
     public void setChasis(String chasis) {
         this.chasis = chasis;
     }
 
+    /**
+     * 
+     * @return obtener el color
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * 
+     * @param color color
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
+    /**
+     * 
+     * @return multas
+     */
     public ArrayList<Multa> getMultas() {
         return multas;
     }
 
+    /**
+     * 
+     * @param multas multas
+     */
     public void setMultas(ArrayList<Multa> multas) {
         this.multas = multas;
     }

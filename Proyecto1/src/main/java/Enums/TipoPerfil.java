@@ -9,7 +9,16 @@ package Enums;
  * @author sjpin
  */
 public enum TipoPerfil {
+    /**
+     * S Standar
+     */
     S,
+    /**
+     * E Estrella
+     */
     E,
+    /**
+     * Operador
+     */
     O
 }

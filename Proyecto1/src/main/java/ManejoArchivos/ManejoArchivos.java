@@ -14,7 +14,7 @@ public class ManejoArchivos{
 
     /**
      * Este metodo lee el archivo y devuelve las lineas del mismo en formato ArrayList
-     * @param nombrearchivo 
+     * @param nombrearchivo nombre del archivo
      * @return ArrayList 
      */
     public static ArrayList<String> LeerArchivo(String nombrearchivo) {
@@ -58,8 +58,8 @@ public class ManejoArchivos{
 
     /**
      * Este metodo escribe un archivo linea por linea
-     * @param nombreArchivo
-     * @param linea
+     * @param nombreArchivo el nombre del archivo a Escribir
+     * @param linea La linea que se desea escribir
      */
     public static void EscribirArchivo(String nombreArchivo, String linea) {
 
@@ -89,9 +89,9 @@ public class ManejoArchivos{
 
     /**
      * Este metodo verifica si para leer el archivo se debe saltar la primera linea o no
-     * @param nombreArchivo
-     * @param saltarPrimeraLinea
-     * @return
+     * @param nombreArchivo El nombre de archivo a escribir
+     * @param saltarPrimeraLinea Si se desea omitir la primera linea
+     * @return ArrayList de las palabras de a linea
      */
     public static ArrayList<String[]> LeerValidando(String nombreArchivo,boolean saltarPrimeraLinea){
         ArrayList<String> lineas=ManejoArchivos.LeerArchivo(nombreArchivo);

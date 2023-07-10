@@ -192,6 +192,10 @@ public class Cliente extends Usuario {
         return base + (puntosPerdidos * 10);
     }
     
+    /**
+     * 
+     * @return String numero de tarjeta  de credito
+     */
     public String getNumTarjetaCredito() {
         return numTarjetaCredito;
     }
@@ -205,14 +209,26 @@ public class Cliente extends Usuario {
         this.numTarjetaCredito = numTarjetaCredito;
     }
 
+    /**
+     * 
+     * @return puntosLicencia
+     */
     public int getPuntosLicencia() {
         return puntosLicencia;
     }
 
+    /**
+     * 
+     * @param puntosLicencia puntosLicencia
+     */
     public void setPuntosLicencia(int puntosLicencia) {
         this.puntosLicencia = puntosLicencia;
     }
 
+    /**
+     * 
+     * @return la lista de Vehiculos
+     */
     public ArrayList<Vehiculo> getListVehiculos() {
         return listVehiculos;
     }
