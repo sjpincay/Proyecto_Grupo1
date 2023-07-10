@@ -153,8 +153,6 @@ public class ManejoArchivos{
 
             // Renombrar el archivo temporal con el nombre del archivo original
             archivoTemporal.renameTo(archivoOriginal);
-
-            System.out.println("Línea borrada y espacios eliminados exitosamente.");
         } catch (IOException e) {
             System.out.println("Error al procesar el archivo: " + e.getMessage());
         }

@@ -164,7 +164,7 @@ public class Cliente extends Usuario {
         
         revision.addRevision(); // Añadir revisión a la base de datos
         horarios.remove(opcionHorario - 1); // Se quita un horario disponible
-        Sistema.removeHorario(opcionHorario - 1);
+        Sistema.removeHorarario(opcionHorario - 1);
         System.out.println("\nPuede pagar su cita hasta 24 horas antes de la cita");
         System.out.println("De lo contrario, la cita se cancelará");
     }

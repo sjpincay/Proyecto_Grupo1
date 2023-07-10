@@ -6,16 +6,7 @@ package com.mycompany.proyecto1;
 
 import static ManejoArchivos.ManejoArchivos.LeerValidando;
 import Enums.TipoPerfil;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-<<<<<<< HEAD
-=======
 import ManejoArchivos.ManejoArchivos;
->>>>>>> 88d1864b4a525b4f66c2212f96e0cc6e8c40b423
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,7 +53,7 @@ public class Sistema {
      * agregarlos a la lista de Usuarios
      */
     public static void cargarUsuarios() {
-        java.util.ArrayList<String[]> datosUsuarios = LeerValidando("usuarios.txt", true);
+        ArrayList<String[]> datosUsuarios = LeerValidando("usuarios.txt", false);
         for (String[] dato : datosUsuarios) {
             switch (dato[6]) {
                 case "S" -> {
@@ -77,7 +68,7 @@ public class Sistema {
                 case "O" -> {
                     
                     listaUsuarios.add(new Operador(dato[0], dato[1], Integer.parseInt(dato[2]), dato[3], dato[4], dato[5], TipoPerfil.valueOf(dato[6])));
-                    ;
+                    
                 }
             }
         }
@@ -90,7 +81,7 @@ public class Sistema {
      * y ponerla a disposicion al sitema
      */
     public static void cargarMultas(){
-        java.util.ArrayList <String[]> datosMultas = LeerValidando("multas.txt", true);
+        java.util.ArrayList <String[]> datosMultas = LeerValidando("multas.txt", false);
         Multa m;
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date fecha1=null;
@@ -117,7 +108,7 @@ public class Sistema {
      * y ponerla a disposicion al sitema
      */
     public static void cargarVehiculos(){
-        java.util.ArrayList<String[]> vehiculo= LeerValidando("vehiculos.txt",true);
+        ArrayList<String[]> vehiculo= LeerValidando("vehiculos.txt",false);
         
         Vehiculo v;
         
@@ -165,7 +156,7 @@ public class Sistema {
      */
     
     public static void cargarRevisiones(){
-        ArrayList<String[]> revisionesTotales= ManejoArchivos.LeerValidando("revisiones.txt", true);
+        ArrayList<String[]> revisionesTotales= ManejoArchivos.LeerValidando("revisiones.txt", false);
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Date fecha = null;
         for(String[] revision: revisionesTotales){
@@ -225,7 +216,6 @@ public class Sistema {
                 
                 //COMPROBANDO SI EL USUARIO ES OPERADOR
                 if (usuario instanceof Operador operador) {
-                    System.out.println("Entroaaa");
                     Sistema.mostrarMenuOperador();
                     int opc2 = 0;
                     while (opc2 != 3) {

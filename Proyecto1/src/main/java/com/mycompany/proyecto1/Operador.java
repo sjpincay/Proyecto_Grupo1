@@ -35,7 +35,7 @@ public class Operador extends Usuario {
      */
     public Operador(String cedula, String nombres, int edad, String correo, String usuario, String Password, TipoPerfil tipoPerfil) {
         super(cedula, nombres, edad, correo, usuario, Password, tipoPerfil);
-        ArrayList<String[]> datosClientes = LeerValidando("operadores.txt", true);
+        ArrayList<String[]> datosClientes = LeerValidando("operadores.txt", false);
         for (String[] dato : datosClientes) {
             if (dato[0].equals(cedula)) {
                 this.sueldo = Integer.parseInt(dato[1]);
@@ -114,7 +114,7 @@ public class Operador extends Usuario {
         System.out.println("Ingrese su numero de cedula: ");
         String cedulaInput = entrada.nextLine();
 
-        Clientee cliente = null;
+        Cliente cliente = null;
         int opcionPagar = 0;
         int opcionMetodo = 0;
         int opcionConfirmar = 0;
@@ -123,7 +123,7 @@ public class Operador extends Usuario {
         int indexRevision = 0;
         ArrayList<Integer> indexMultas = new ArrayList<>();
         for (Usuario user : Sistema.listaUsuarios) {
-            if (user instanceof Clientee cliente1 && user.getTipoPerfil() != TipoPerfil.O) {
+            if (user instanceof Cliente cliente1 && user.getTipoPerfil() != TipoPerfil.O) {
                 if (!user.getCedula().equals(cedulaInput)) {
                     continue;
                 }
