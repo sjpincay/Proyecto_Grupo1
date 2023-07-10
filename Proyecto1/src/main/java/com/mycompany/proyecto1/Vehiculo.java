@@ -42,7 +42,13 @@ public class Vehiculo {
         }
         return multaReturn;
     }
-    
+     /**
+     * Método estático que obtiene un objeto Vehiculo según su placa.
+     *
+     * @param vehiculos Lista de vehículos
+     * @param placa Placa del vehículo a buscar
+     * @return Objeto Vehiculo correspondiente a la placa o null si no se encuentra
+     */
     public static Vehiculo getVehiculo(ArrayList<Vehiculo> vehiculos, String placa){
         for(Vehiculo vehi: vehiculos){
             if(vehi.getPlaca().equals(placa)){
@@ -52,7 +58,11 @@ public class Vehiculo {
         
         return null;
     }
-    
+    /**
+     * Método que muestra las multas del vehículo y retorna el valor total a pagar.
+     *
+     * @return Valor total a pagar por las multas del vehículo
+     */
     public double mostrarMultas() {
         
 
@@ -76,7 +86,11 @@ public class Vehiculo {
         }
         return valorTotal;
     }
-    
+    /**
+     * Método que calcula el valor total a pagar por las multas del vehículo.
+     *
+     * @return Valor total a pagar por las multas del vehículo
+     */
     
     public double getValor(){
         double valorTotal = 0.0;
@@ -85,7 +99,11 @@ public class Vehiculo {
         }
         return valorTotal;
     }
-    
+    /**
+     * Método que calcula la suma de los puntos perdidos por las multas del vehículo.
+     *
+     * @return Suma de puntos perdidos por las multas del vehículo
+     */
     
     public int totalPuntosPerdidos() {
         int puntosTotales = 0;
@@ -96,7 +114,7 @@ public class Vehiculo {
 
         return puntosTotales;
     }
-    
+    // Getters y Setters
     
     public String getOwner() {
         return owner;
