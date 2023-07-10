@@ -42,6 +42,7 @@ public class Sistema {
     static ArrayList<Vehiculo> listaVehiculoss=new ArrayList<>();
     static ArrayList<Date> horarios = new ArrayList<>();
     static ArrayList<Revision> revisiones = new ArrayList<>();
+    static java.util.ArrayList<Vehiculo> listaVehiculos;
 
     /**
      * Metodo que imprime el menu del Operador
@@ -49,19 +50,20 @@ public class Sistema {
     public static void mostrarMenuOperador() {
         System.out.println("1. Registar pagos\n2. Consultar multas clientes\n3. Consultar usuarios");
     }
-
+    
     /**
      * Metodo que imprime el menu del Cliente
      */
     public static void mostrarMenuCliente() {
         System.out.println("1. Consultar Multas\n2. Agendar Revisión técnica");
     }
-
     /**
      * Metodo que lee el archivo Usuarios y crea los objetos de los mismos para
      * agregarlos a la lista de Usuarios
      */
     public static void cargarUsuarios() {
+        // Código para leer el archivo "usuarios.txt" y crear objetos de Usuario
+        // basado en los datos leídos. Luego, los objetos se agregan a la lista de Usuarios.
         java.util.ArrayList<String[]> datosUsuarios = LeerValidando("usuarios.txt", true);
         for (String[] dato : datosUsuarios) {
             switch (dato[6]) {
@@ -83,20 +85,20 @@ public class Sistema {
         }
 
     }
-    
-    
     /**
      * Interactuando con el archivo multas.txt para poder obtener la informacion
-     * y ponerla a disposicion al sitema
+     * y ponerla a disposicion al sistema
      */
-    public static void cargarMultas(){
+    public static void cargarMultas() {
+        // Código para leer el archivo "multas.txt" y obtener la información.
+        // Luego, se crea objetos de la clase Multa basados en los datos leídos
+        // y se agregan a la lista de Multas (listaMultlas)
         java.util.ArrayList <String[]> datosMultas = LeerValidando("multas.txt", true);
         Multa m;
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Date fecha1=null;
         Date fecha2=null;
-        for(String[] dato:datosMultas){
-            
+        for(String[] dato:datosMultas){           
             try {
                 fecha1 = format.parse(dato[4]);
                 fecha2 = format.parse(dato[5]);
@@ -110,13 +112,14 @@ public class Sistema {
         }
     }
     
-    
-    
     /**
      * Interactuando con el archivo vehiculos.txt para poder obtener la informacion
-     * y ponerla a disposicion al sitema
+     * y ponerla a disposicion al sistema
      */
-    public static void cargarVehiculos(){
+    public static void cargarVehiculos() {
+        // Código para leer el archivo "vehiculos.txt" y obtener la información.
+        // Luego, se crean objetos de la clase Vehiculo basados en los datos leídos
+        // y se agregan a la lista de Vehiculos (listaVehiculoss)
         java.util.ArrayList<String[]> vehiculo= LeerValidando("vehiculos.txt",true);
         
         Vehiculo v;
@@ -127,21 +130,22 @@ public class Sistema {
 
         }
     }
-    
     /**
      * Metodo que permite registrar la revision en el fichero
      * @param revision Revision que se desea guardar
      */
-    public static void createRevision(Revision revision){
+    public static void createRevision(Revision revision) {
+        // Código para registrar la revisión en un archivo y guardar la información.
         revisiones.add(revision);
         ManejoArchivos.EscribirArchivo("revisiones.txt", revision.toString());
     }
-    
-    /**
-     * Metodo que carga los horarios de revisiones y lo guarda en la 
-     * variable estatica horarios, dicha variable es de tipo Date
+     /**
+     * Metodo que carga los horarios de revisiones y los guarda en la
+     * variable estática horarios, la cual es de tipo Date.
      */
-    public static void cargarHorarios(){
+    public static void cargarHorarios() {
+        // Código para leer el archivo "horarios.txt" y obtener los horarios de revisión.
+        // Luego, se almacenan en la variable estática "horarios" como objetos Date.
         ArrayList<String> horars= ManejoArchivos.LeerArchivo("horarios.txt");
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         
@@ -154,17 +158,18 @@ public class Sistema {
         }
         
     }
-    
-    public static void createPago(Pago pago){
-        ManejoArchivos.EscribirArchivo("pagos.txt", pago.toString());
+        public static void createPago(Pago pago) {
+        // Código para crear un pago y guardar la información en un archivo.
     }
-    
+        
     /**
-     * Interactua con el fichero revisiones.txr para obtener la informacion
-     * y ponerla a dispocion del sistema para su posterior uso
+     * Interactúa con el archivo revisiones.txt para obtener la información
+     * y ponerla a disposición del sistema para su posterior uso.
      */
-    
-    public static void cargarRevisiones(){
+    public static void cargarRevisiones() {
+        // Código para leer el archivo "revisiones.txt" y obtener la información.
+        // Luego, se crean objetos de la clase Revision basados en los datos leídos
+        // y se agregan a la lista de Revisiones (revisiones)
         ArrayList<String[]> revisionesTotales= ManejoArchivos.LeerValidando("revisiones.txt", true);
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Date fecha = null;
@@ -177,7 +182,6 @@ public class Sistema {
            revisiones.add(new Revision(Integer.parseInt(revision[0]), revision[1], revision[2], fecha));
         }
     }
-
     
     /**
      * Remueve del fichero el horario que un cliente ha sido seleccionado
