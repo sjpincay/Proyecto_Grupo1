@@ -13,7 +13,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
-
+/**
+ * Clase Cliente que representa a un cliente en el sistema.
+ */
 public class Cliente extends Usuario {
     private String numTarjetaCredito;
     private int puntosLicencia;
