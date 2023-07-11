@@ -47,25 +47,24 @@ public class Vehiculo {
         this.chasis = chasis;
         this.color = color;
 
-        multas = initMultas(); // Inicializar la lista de multas asociadas al vehículo
+        initMultas(); // Inicializar la lista de multas asociadas al vehículo
     }
     
     /**
      * Método que inicializa la lista de multas del vehículo.
      * 
-     * @return La lista de multas asociadas al vehículo
+     * 
      */
-    public ArrayList<Multa> initMultas(){
+    public void initMultas(){
         ArrayList<Multa> mult = Sistema.listaMultlas; // Obtener la lista de multas del sistema
-        ArrayList<Multa> multaReturn = new ArrayList<>();
+        this.multas = new ArrayList<>();
         
         // Filtrar las multas por placa
         for (Multa multa : mult) {
             if (multa.getPlaca().equals(placa)) {
-                multaReturn.add(multa);
+                multas.add(multa);
             }
         }
-        return multaReturn;
     }
 
     /**
@@ -94,6 +93,7 @@ public class Vehiculo {
         System.out.println("------------------------------------------------");
         System.out.println("               DETALLE DE MULTAS                ");
         System.out.println("------------------------------------------------");
+        System.out.println("Informacion del vehiculo" + this);
         System.out.println("CEDULA | MATRICULA | INFRACCION | VALOR A PAGAR | FECHA DE INFRACCION | FECHA DE NOTIFICACION | PUNTOS");
 
         for (Multa multa : multas) {
@@ -141,7 +141,7 @@ public class Vehiculo {
     // Getters y Setters
 
     /**
-     * 
+     * Obtiene el owner del vehiculo
      * @return El dueño
      */
     public String getOwner() {
@@ -150,7 +150,7 @@ public class Vehiculo {
 
     
     /**
-     * 
+     * Se establece el owner del vehiculo
      * @param owner Establecer el dueño
      */
     public void setOwner(String owner) {
@@ -158,7 +158,7 @@ public class Vehiculo {
     }
 
     /**
-     * 
+     * Obtiene la placa del vehiculo
      * @return Placa
      */
     public String getPlaca() {
@@ -166,7 +166,7 @@ public class Vehiculo {
     }
 
     /**
-     * 
+     * Modifica la placa del vehiculo
      * @param placa Establecer la placa
      */
     public void setPlaca(String placa) {
@@ -174,7 +174,7 @@ public class Vehiculo {
     }
 
     /**
-     * 
+     * Obtiene la marca del vehiculo
      * @return Marca
      */
     public String getMarca() {
@@ -182,7 +182,7 @@ public class Vehiculo {
     }
 
     /**
-     * 
+     * Modifica la marca del vehiculo
      * @param marca Marca
      */
     public void setMarca(String marca) {
@@ -190,7 +190,7 @@ public class Vehiculo {
     }
 
     /**
-     * 
+     * Obtiene el modelo del vehiculo
      * @return Modelo
      */
     public String getModelo() {
@@ -198,7 +198,7 @@ public class Vehiculo {
     }
 
     /**
-     * 
+     * Establece el modelo del vehiculo
      * @param modelo Modelo
      */
     public void setModelo(String modelo) {
@@ -206,7 +206,7 @@ public class Vehiculo {
     }
 
     /**
-     * 
+     * Obtiene el anio del vehiculo
      * @return año
      */
     public String getYear() {
@@ -214,15 +214,15 @@ public class Vehiculo {
     }
 
     /**
-     * 
-     * @param year Establcer el año
+     * Establece el anio del vehiculo
+     * @param year anio de cual es el vehiculo
      */
     public void setYear(String year) {
         this.year = year;
     }
 
     /**
-     * 
+     * Obtine el chasis del vehiculo
      * @return chasis
      */
     public String getChasis() {
@@ -230,23 +230,23 @@ public class Vehiculo {
     }
 
     /**
-     * 
-     * @param chasis Establecer el chasis
+     * Establece el chasis
+     * @param chasis modelo de chasis
      */
     public void setChasis(String chasis) {
         this.chasis = chasis;
     }
 
     /**
-     * 
-     * @return obtener el color
+     * Obtiene el color del vehiculo
+     * @return el color
      */
     public String getColor() {
         return color;
     }
 
     /**
-     * 
+     * Establece el color del vehiculo
      * @param color color
      */
     public void setColor(String color) {
@@ -254,7 +254,7 @@ public class Vehiculo {
     }
 
     /**
-     * 
+     * Obtiene todas las multas asociadas a este
      * @return multas
      */
     public ArrayList<Multa> getMultas() {
@@ -262,10 +262,17 @@ public class Vehiculo {
     }
 
     /**
-     * 
+     * establece las multas del vehiculo
      * @param multas multas
      */
     public void setMultas(ArrayList<Multa> multas) {
         this.multas = multas;
     }
+
+    @Override
+    public String toString() {
+        return " Duenio: " + owner + " Placa: " + placa;
+    }
+    
+    
 }

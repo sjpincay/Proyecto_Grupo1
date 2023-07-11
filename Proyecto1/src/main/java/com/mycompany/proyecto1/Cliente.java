@@ -143,8 +143,16 @@ public class Cliente extends Usuario {
             vehiculoRevision.mostrarMultas();
             return;
         }
+        
+        //Verficar que no consta con revisiones existentes relacionados a la misma
+        //placa
+        if(Revision.getRevision(Sistema.revisiones, placa) != null){
+            //Si hay una revison con esa placa
+            System.out.println("Lo siento, Ud ya tiene una revision para este vehiculo");
+            return;
+        }
 
-        System.out.println("Ud. no tiene multas, por favor elija un horario");
+        System.out.println("Ud. no tiene multas ni revisones asocidas para este vehiculo, por elija el horario que mas desee");
         int contador = 1;
         int opcionHorario = 0;
 
@@ -173,7 +181,7 @@ public class Cliente extends Usuario {
         revision.addRevision(); // Añadir revisión a la base de datos
         horarios.remove(opcionHorario - 1); // Se quita un horario disponible
         Sistema.removeHorarario(opcionHorario - 1);
-        System.out.println("\nPuede pagar su cita hasta 24 horas antes de la cita");
+        System.out.println("\nPuede pagar hasta 24 horas antes de la cita");
         System.out.println("De lo contrario, la cita se cancelará");
     }
 
@@ -199,7 +207,7 @@ public class Cliente extends Usuario {
     }
     
     /**
-     * 
+     *  Obtiene el numero de la tarjeta de credito del usuario
      * @return String numero de tarjeta  de credito
      */
 
@@ -219,7 +227,7 @@ public class Cliente extends Usuario {
     }
 
     /**
-     * 
+     * Obtiene la cantidad de puntos de licencia
      * @return puntosLicencia
      */
     public int getPuntosLicencia() {
@@ -227,7 +235,7 @@ public class Cliente extends Usuario {
     }
 
     /**
-     * 
+     * Modifica el atributo de los puntos de licencia
      * @param puntosLicencia puntosLicencia
      */
     public void setPuntosLicencia(int puntosLicencia) {
@@ -235,7 +243,7 @@ public class Cliente extends Usuario {
     }
 
     /**
-     * 
+     * Obtiene todos los vehivulos asociados al usuario
      * @return la lista de Vehiculos
      */
     public ArrayList<Vehiculo> getListVehiculos() {

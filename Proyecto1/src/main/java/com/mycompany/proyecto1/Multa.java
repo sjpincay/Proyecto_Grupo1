@@ -47,7 +47,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * Obtiene el numero de cedula del responsable de la multa
      * @return String numero de cedula
      */
     public String getCedula() {
@@ -55,7 +55,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * Modifica el numero de cedula del responsable de la multa
      * @param cedula La cedula 
      */
     public void setCedula(String cedula) {
@@ -63,7 +63,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * La placa del vehiculo que se multo
      * @return la placla 
      */
     public String getPlaca() {
@@ -71,7 +71,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * Modifica el numero de placa del vehiculo infractor
      * @param placa El numero de placa
      */
     public void setPlaca(String placa) {
@@ -79,7 +79,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * Obtiene el motivo de la infraccion
      * @return la infraccion
      */
     public String getInfraccion() {
@@ -87,7 +87,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * Modifica el motivo de la infraccion
      * @param infraccion la infraccion
      */
     public void setInfraccion(String infraccion) {
@@ -96,7 +96,7 @@ public class Multa {
 
     
     /**
-     * 
+     * Obtiene el valor que se debe pagar de la multa
      * @return el valor a pagar
      */
     public Double getValor() {
@@ -105,7 +105,7 @@ public class Multa {
 
     
     /**
-     * 
+     * Establece el valor a pagar de la multa
      * @param valor El valor a pagar
      */
     public void setValor(Double valor) {
@@ -114,7 +114,7 @@ public class Multa {
 
     
     /**
-     * 
+     * Se obtiene la fecha de la infraccion
      * @return la fecha de infraccion
      */
     public Date getFechaInfraccion() {
@@ -123,7 +123,7 @@ public class Multa {
 
     
     /**
-     * 
+     * Modifica la fecha de la infraccion
      * @param fechaInfraccion la fecha de infraccion
      */
     public void setFechaInfraccion(Date fechaInfraccion) {
@@ -131,7 +131,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * Obtiene la fecha cuando se notifico la multa
      * @return la fecha de notificacion
      */
     public Date getFechaNotificacion() {
@@ -140,7 +140,7 @@ public class Multa {
 
 
     /**
-     * 
+     * modifica la fecha cuando se notifico
      * @param fechaNotificacion la fecha donde se notifico
      */
     public void setFechaNotificacion(Date fechaNotificacion) {
@@ -148,7 +148,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * Obtiene la cantidad de puntos que se bajaran por la multa
      * @return la cantidad de puntos
      */
     public int getPuntos() {
@@ -156,7 +156,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * Modifica el numero de puntos que se bajara al infractor
      * @param puntos cantidad de puntos
      */
     public void setPuntos(int puntos) {
@@ -164,7 +164,7 @@ public class Multa {
     }
 
     /**
-     * 
+     * Metodo para mostrar las multas
      * @return String formato a imprimir
      */
     @Override
@@ -176,6 +176,8 @@ public class Multa {
 
     
     /**
+     * 
+     * Metodo para verficiar si dos multas son iguales
      * 
      * @param obj objeto a varificar
      * @return si son iguales

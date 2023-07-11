@@ -63,11 +63,16 @@ public class Operador extends Usuario {
 
         ArrayList<Multa> multas = Sistema.listaMultlas;
 
+        int contador = 0;
         // Filtrar lista por meses
         for (Multa multa : multas) {
             if (Integer.parseInt(format.format(multa.getFechaInfraccion())) == Integer.parseInt(mes)) {
                 System.out.println(multa);
+                contador++;
             }
+        }
+        if(contador == 0){
+            System.out.println("\n\nNo existe multas asociadas al mes actual");
         }
     }
 
@@ -111,7 +116,7 @@ public class Operador extends Usuario {
      */
     public void registrarPago() {
         Scanner entrada = new Scanner(System.in);
-        System.out.println("Ingrese su numero de cedula: ");
+        System.out.println("Ingrese el numero de cedula del cliente: ");
         String cedulaInput = entrada.nextLine();
 
         Cliente cliente = null;
@@ -145,7 +150,7 @@ public class Operador extends Usuario {
         } while (opcionPagar > 2 || opcionPagar <= 0);
 
         Pago pago;
-        String placa;
+        String placa = "";
         // Obtener la fecha actual
         Calendar calendar = Calendar.getInstance();
         Date fecha = calendar.getTime();
@@ -162,12 +167,12 @@ public class Operador extends Usuario {
 
             // Verificar si tiene multas
             if (vehiCliente.getMultas().isEmpty()) {
-                System.out.println("Ud no posee multas");
+                System.out.println("El cliente no posee multas");
                 return;
             }
 
             valorPagar = vehiCliente.getValor(); // Valor a pagar por multas
-
+            
             System.out.println("Valor a pagar: " + valorPagar);
             pago = new Pago(cliente, valorPagar, 'E', valorPagar, fecha, "Multa");
 
@@ -175,6 +180,7 @@ public class Operador extends Usuario {
             for (Multa multa : Sistema.listaMultlas) {
                 if (vehiCliente.getMultas().contains(multa)) {
                     indexMultas.add(Sistema.listaMultlas.indexOf(multa));
+                  
                 }
             }
         } else {
@@ -183,14 +189,14 @@ public class Operador extends Usuario {
             int cantidad = Revision.cantidadRevisiones(Sistema.revisiones, cliente.getCedula());
 
             if (cantidad > 1) {
-                System.out.println("Ud posee más de una revisión");
+                System.out.println("El cliente posee mas de una revision");
                 placa = pedirPlaca();
                 rev = Revision.getRevision(Sistema.revisiones, placa);
             }
 
             // Verificar si existe alguna revisión
             if (rev == null) {
-                System.out.println("Ud no posee una revisión en estos momentos");
+                System.out.println("El cliente no posee revisiones en estos momentos");
                 return;
             }
 
@@ -248,11 +254,23 @@ public class Operador extends Usuario {
             // Se borrarán las multas
             // Como son varias multas, se irán borrando una por una de mayor a menor
             // para que no haya conflicto entre sus índices cuando se ajusten
-            System.out.println(indexMultas.size());
             for (int i = indexMultas.size() - 1; i >= 0; i--) {
                 Sistema.removeMulta((int) indexMultas.get(i));
                 Sistema.listaMultlas.remove((int) indexMultas.get(i));
+                
+              
             }
+              //Debido a que si se modifica los objetos deben cambiar
+                //La multa guardadas en los objetos que se incializaron deben
+                //cambiar
+
+                //Se vuelve a inicializar las multas de los vehiculos pero con los 
+                //cambios perttinentes
+            if(!placa.equals("")){
+                    Vehiculo.getVehiculo(Sistema.listaVehiculoss, placa).setMultas(new ArrayList<>());
+                }else{
+                    cliente.getListVehiculos().get(0).setMultas(new ArrayList<>());
+                }
         } else {
             // Se borrarán las revisiones
             Sistema.removeRevisiones(indexRevision);

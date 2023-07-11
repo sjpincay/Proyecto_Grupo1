@@ -138,7 +138,7 @@ public class Revision {
     @Override
     public String toString() {
         return codigoRevision + "," + cedula + "," + placa + ","
-                + new SimpleDateFormat("dd-MM-yyy HH:ss").format(fechaRevision);
+                + new SimpleDateFormat("dd-MM-yyy HH:mm").format(fechaRevision);
     }
 
     /**
